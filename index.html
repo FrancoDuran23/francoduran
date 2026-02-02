@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Franco Duran — Fullstack Developer · Django</title>
+  <meta name="description" content="Franco Duran: Fullstack developer specialized in Django, Python, Go, TypeScript and more. IT Project Director, AI trainer for educators." />
+  <meta name="theme-color" content="#0a0f1a" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            base:    { 950:'#050a14', 900:'#0a0f1a', 800:'#0f1629', 700:'#151d35' },
+            accent:  { 400:'#60a5fa', 500:'#3b82f6', 600:'#2563eb' },
+            surface: { 800:'#111827', 700:'#1a2236', 600:'#1e2a3f' },
+            muted:   '#94a3b8',
+          },
+          fontFamily: { sans: ['Inter','system-ui','sans-serif'] },
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    body { background: #050a14; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #0a0f1a; }
+    ::-webkit-scrollbar-thumb { background: #1e2a3f; border-radius: 3px; }
+    .card-hover { transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+    .card-hover:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(59,130,246,.12); border-color: #2563eb; }
+    .badge { transition: background .2s ease, color .2s ease; }
+    .badge:hover { background: #2563eb; color: #fff; }
+    .fade-in { opacity:0; transform:translateY(18px); transition: opacity .5s ease, transform .5s ease; }
+    .fade-in.visible { opacity:1; transform:translateY(0); }
+    .nav-link { position:relative; }
+    .nav-link::after { content:''; position:absolute; bottom:-2px; left:0; width:0; height:2px; background:#3b82f6; transition:width .25s ease; }
+    .nav-link:hover::after { width:100%; }
+    .lang-btn { transition: all .2s ease; }
+    .lang-btn.active { background: #2563eb; color: #fff; border-color: #2563eb; }
+  </style>
+
+  <!-- ══════════════════════════════════════════════
+       SITE_DATA — EDIT YOUR CONTENT HERE
+  ══════════════════════════════════════════════ -->
+  <script>
+    const SITE_DATA = {
+
+      profile: {
+        name:      "Franco Duran",
+        role:      "Fullstack Developer · Django · Polyglot Stack",
+        location:  "",
+        email:     "francoduran232@gmail.com",
+        github:    "https://github.com/francoduran23",
+        linkedin:  "https://www.linkedin.com/in/francoduran23/",
+        phone:     "YOUR_PHONE",
+        showPhone: false,
+        photo:     "perfil.jpg",
+      },
+
+      /* ── i18n ── */
+      i18n: {
+        en: {
+          tagline: "Fullstack developer focused on Django, Python and scalable systems. Currently building banking software at Dinardi Projects. IT Project Director & AI trainer for education professionals and government organizations.",
+          navProjects: "Projects",
+          heroBtn1: "View projects",
+          heroBtn2: "Contact me",
+          snapshotTitle: "Tech & Languages",
+          techTitle: "Tech Stack",
+          langTitle: "Languages",
+          projectsTitle: "Featured Projects",
+          projectsSub: "Personal projects and MVPs — what I can share publicly.",
+          problemLabel: "Problem",
+          solutionLabel: "Solution",
+          impactLabel: "Impact",
+          workTitle: "Professional Experience",
+          workSub: "Source code not public due to confidentiality; happy to discuss in interviews.",
+          eduTitle: "Education & Community",
+          eduLabel: "Education",
+          communityLabel: "Community Role",
+          labTitle: "Lab / Archived",
+          labSub: "Prototypes and experiments — what I learned matters more than the code.",
+          learnedLabel: "Learned",
+          aboutTitle: "About me",
+          aboutText: "Fullstack developer with a product mindset and a communicator profile. BSc in Information Technology from Universidad de Palermo and Analyst Programmer from UNJu.\n\nCurrently at Dinardi Projects building banking software, and at Lambda Solution developing and optimizing fiber optic systems. Previously, at the Anti-Corruption Office of Jujuy Province I implemented end-to-end solutions that significantly improved organizational efficiency, and I developed government web systems for the province.\n\nMy focus is on Python, Django and building scalable backends, always driven by adaptability and responsiveness to key client needs. I also occasionally coordinate AI training sessions and workshops for education professionals and government organizations as IT Project Director at a community training foundation in Jujuy, in collaboration with the Universidad Nacional de Jujuy.\n\nComfortable in remote, async and multicultural teams.",
+          contactTitle: "Contact",
+          contactSub: "Available for remote or hybrid opportunities.",
+          footerText: "Built with focus, coffee and a bit of AI.",
+          completed: "Completed",
+        },
+        es: {
+          tagline: "Desarrollador fullstack enfocado en Django, Python y sistemas escalables. Actualmente desarrollo software bancario en Dinardi Projects. Director de Proyectos IT y capacitador en IA para profesionales de la educación y organismos gubernamentales.",
+          navProjects: "Proyectos",
+          heroBtn1: "Ver proyectos",
+          heroBtn2: "Contactar",
+          snapshotTitle: "Tech & Idiomas",
+          techTitle: "Tech Stack",
+          langTitle: "Idiomas",
+          projectsTitle: "Proyectos Destacados",
+          projectsSub: "Proyectos personales y MVPs — lo que puedo mostrar públicamente.",
+          problemLabel: "Problema",
+          solutionLabel: "Solución",
+          impactLabel: "Impacto",
+          workTitle: "Experiencia Profesional",
+          workSub: "Código no público por confidencialidad; explicable en entrevista.",
+          eduTitle: "Formación & Comunidad",
+          eduLabel: "Educación",
+          communityLabel: "Rol en Comunidad",
+          labTitle: "Lab / Archivados",
+          labSub: "Prototipos y experimentos — lo que aprendí importa más que el código.",
+          learnedLabel: "Aprendizaje",
+          aboutTitle: "Sobre mí",
+          aboutText: "Desarrollador fullstack con mentalidad de producto y perfil comunicador. Licenciado en Tecnologías de la Información por la Universidad de Palermo y Analista Programador por la UNJu.\n\nActualmente en Dinardi Projects desarrollo software bancario, y en Lambda Solution desarrollo y optimizo sistemas de fibra óptica. Anteriormente, en la Oficina Anticorrupción de la Provincia de Jujuy implementé soluciones integrales que mejoraron significativamente la eficiencia organizacional, y desarrollé sistemas web gubernamentales para la provincia.\n\nMi enfoque está en Python, Django y la construcción de backends escalables, siempre orientado a la adaptabilidad y respuesta a necesidades clave de clientes. Además, de forma ocasional coordino y dicto charlas y capacitaciones sobre inteligencia artificial para profesionales de la educación y organismos gubernamentales como Director de Proyectos IT en una fundación de capacitación comunitaria en Jujuy, en colaboración con la Universidad Nacional de Jujuy.\n\nCómodo en equipos remotos, async y multiculturales.",
+          contactTitle: "Contacto",
+          contactSub: "Disponible para oportunidades remotas o híbridas.",
+          footerText: "Hecho con foco, café y algo de IA.",
+          completed: "Completo",
+        },
+        pt: {
+          tagline: "Desenvolvedor fullstack focado em Django, Python e sistemas escaláveis. Atualmente desenvolvendo software bancário na Dinardi Projects. Diretor de Projetos de TI e instrutor de IA para profissionais da educação e organizações governamentais.",
+          navProjects: "Projetos",
+          heroBtn1: "Ver projetos",
+          heroBtn2: "Contato",
+          snapshotTitle: "Tech & Idiomas",
+          techTitle: "Tech Stack",
+          langTitle: "Idiomas",
+          projectsTitle: "Projetos em Destaque",
+          projectsSub: "Projetos pessoais e MVPs — o que posso mostrar publicamente.",
+          problemLabel: "Problema",
+          solutionLabel: "Solução",
+          impactLabel: "Impacto",
+          workTitle: "Experiência Profissional",
+          workSub: "Código não público por confidencialidade; posso explicar em entrevista.",
+          eduTitle: "Formação & Comunidade",
+          eduLabel: "Educação",
+          communityLabel: "Papel na Comunidade",
+          labTitle: "Lab / Arquivados",
+          labSub: "Protótipos e experimentos — o que aprendi importa mais que o código.",
+          learnedLabel: "Aprendizado",
+          aboutTitle: "Sobre mim",
+          aboutText: "Desenvolvedor fullstack com mentalidade de produto e perfil comunicador. Bacharelado em Tecnologias da Informação pela Universidad de Palermo e Analista Programador pela UNJu.\n\nAtualmente na Dinardi Projects desenvolvo software bancário, e na Lambda Solution desenvolvo e otimizo sistemas de fibra óptica. Anteriormente, na Oficina Anticorrupción da Província de Jujuy implementei soluções integrais que melhoraram significativamente a eficiência organizacional, e desenvolvi sistemas web governamentais para a província.\n\nMeu foco está em Python, Django e construção de backends escaláveis, sempre orientado à adaptabilidade e resposta às necessidades dos clientes. Além disso, ocasionalmente coordeno e ministro palestras e capacitações sobre inteligência artificial para profissionais da educação e organizações governamentais como Diretor de Projetos de TI em uma fundação de capacitação comunitária em Jujuy, em colaboração com a Universidad Nacional de Jujuy.\n\nConfortável em equipes remotas, assíncronas e multiculturais.",
+          contactTitle: "Contato",
+          contactSub: "Disponível para oportunidades remotas ou híbridas.",
+          footerText: "Feito com foco, café e um pouco de IA.",
+          completed: "Concluído",
+        },
+      },
+
+      languages: [
+        { label: "Spanish",    level: { en:"Native", es:"Nativo", pt:"Nativo" } },
+        { label: "Portuguese", level: { en:"Basic",  es:"Básico", pt:"Básico" } },
+        { label: "English",    level: { en:"Intermediate", es:"Intermedio", pt:"Intermediário" } },
+      ],
+
+      skills: [
+        "Django","Python","PostgreSQL","Redis",
+        "Docker","Nginx","Go","TypeScript","CI/CD",
+        "LangChain","Pandas","Bots / AI Agents","Data Science"
+      ],
+
+      featuredProjects: [
+        {
+          title:    "Bora",
+          image:    "bora.png",
+          oneLiner: "Social travel app for solo travelers staying at hostels",
+          problem:  "Solo travelers struggle to find people to share plans and experiences with",
+          solution: "A platform where travelers can create and join group plans at hostels",
+          impact:   "Connects solo travelers, turning individual trips into shared adventures",
+          stack:    ["React","Supabase","Vercel"],
+          demoUrl:  "https://bora-app-nu.vercel.app",
+          repoUrl:  "",
+          status:   "MVP",
+        },
+        {
+          title:    "CIDEJ",
+          image:    "cidej.png",
+          oneLiner: "Website for a community training foundation in Jujuy",
+          problem:  "The foundation lacked an online presence to communicate its mission and programs",
+          solution: "Built a website to showcase the foundation's projects, AI training sessions and community initiatives",
+          impact:   "Gives visibility to the foundation and facilitates outreach to education professionals and government organizations",
+          stack:    ["TypeScript","PostgreSQL","Docker"],
+          demoUrl:  "https://www.cidej23.org",
+          repoUrl:  "",
+          status:   "Live",
+        },
+        {
+          title:    "EmpathIA",
+          image:    "emphatia.png",
+          oneLiner: "AI-powered app that transforms aggressive messages into empathetic communication",
+          problem:  "Misinterpreted messages ruin important conversations — between separated parents, family members, couples and friends",
+          solution: "Therapeutic AI that rewrites messages in real time using specialized prompt engineering and a custom knowledge base of therapeutic patterns, with anonymous and temporary chat for maximum privacy",
+          impact:   "Combines psychology with technology to solve real interpersonal communication problems, applicable to couples, separated parents, families and friendships",
+          stack:    ["Django","WebSockets","OpenAI","Railway"],
+          demoUrl:  "https://emphatia.up.railway.app",
+          repoUrl:  "",
+          status:   "MVP",
+        },
+        {
+          title:    "Vigo Inmobiliaria",
+          image:    "inmo.png",
+          oneLiner: "Real estate platform for buying and selling properties",
+          problem:  "Real estate agencies need a modern online presence to showcase listings and connect with buyers",
+          solution: "Built a full web platform with property listings, search and contact features powered by Firebase",
+          impact:   "Provides a streamlined experience for buyers and sellers, digitalizing the real estate process",
+          stack:    ["Firebase","Google Cloud"],
+          demoUrl:  "https://vigoinmobiliaria.com",
+          repoUrl:  "",
+          status:   "Live",
+        },
+      ],
+
+      workHighlights: [
+        {
+          title:   "Dinardi Projects — Banking Software",
+          bullets: [
+            "Backend development for banking platforms and financial systems",
+            "Building scalable APIs and services handling sensitive financial data",
+          ],
+          stack: ["Python","Django","PostgreSQL","Docker","CI/CD"],
+        },
+        {
+          title:   "Lambda Solution — Fiber Optic Systems",
+          bullets: [
+            "Built backend systems to manage and optimize fiber optic network infrastructure",
+            "Developed Python scripts and migrated legacy solutions to Django",
+            "Improved operational efficiency through automation and modern tooling",
+          ],
+          stack: ["Python","Go","Django","PostgreSQL","Redis"],
+        },
+        {
+          title:   "Anti-Corruption Office — Jujuy Province",
+          bullets: [
+            "Implemented end-to-end government management solutions",
+            "Streamlined internal processes and improved organizational efficiency",
+            "Developed and maintained government web systems for the province",
+          ],
+          stack: ["Python","Django","PostgreSQL","Nginx"],
+        },
+        {
+          title:   "Government Web Systems — Jujuy Province",
+          bullets: [
+            "Developed web platforms for provincial government agencies",
+            "Built fullstack solutions to digitize and modernize public services",
+          ],
+          stack: ["Django","Python","PostgreSQL","Docker","Nginx"],
+        },
+      ],
+
+      labProjects: [],
+
+      education: [
+        {
+          degree:      "BSc in Information Technology",
+          institution: "Universidad de Palermo",
+          status:      "completed",
+        },
+        {
+          degree:      "Analyst Programmer",
+          institution: "Universidad Nacional de Jujuy (UNJu)",
+          status:      "completed",
+        },
+      ],
+
+      communityRoles: [
+        {
+          role:         "IT Project Director",
+          organization: "CIDEJ — Jujuy (in collaboration with UNJu)",
+          description: {
+            en: "I lead IT projects and coordinate AI training sessions and workshops for education professionals and government organizations, helping them integrate artificial intelligence tools into their daily workflows, automate processes and improve decision-making.",
+            es: "Dirijo proyectos tecnológicos y coordino charlas y capacitaciones sobre inteligencia artificial tanto para profesionales de la educación como para organismos gubernamentales, facilitando la integración de herramientas de IA en sus flujos de trabajo, la automatización de procesos y la mejora en la toma de decisiones.",
+            pt: "Lidero projetos de TI e coordeno capacitações sobre inteligência artificial tanto para profissionais da educação quanto para organizações governamentais, facilitando a integração de ferramentas de IA em seus fluxos de trabalho, a automatização de processos e a melhoria na tomada de decisões.",
+          },
+        },
+      ],
+    };
+  </script>
+</head>
+
+<body class="font-sans text-slate-300 antialiased">
+
+  <!-- ─── NAVBAR ─── -->
+  <nav id="navbar" class="fixed top-0 inset-x-0 z-50 border-b border-white/5 bg-base-950/80 backdrop-blur-md">
+    <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+      <a href="#" class="text-lg font-semibold text-white tracking-tight" id="nav-name"></a>
+      <div class="flex items-center gap-4">
+        <!-- Language switcher -->
+        <div class="flex items-center gap-1 mr-2" id="lang-switcher">
+          <button data-lang="en" class="lang-btn text-[11px] font-semibold px-2.5 py-1 rounded-md border border-white/10 text-slate-400 hover:text-white active" aria-label="English">EN</button>
+          <button data-lang="es" class="lang-btn text-[11px] font-semibold px-2.5 py-1 rounded-md border border-white/10 text-slate-400 hover:text-white" aria-label="Español">ES</button>
+          <button data-lang="pt" class="lang-btn text-[11px] font-semibold px-2.5 py-1 rounded-md border border-white/10 text-slate-400 hover:text-white" aria-label="Português">PT</button>
+        </div>
+        <a id="nav-gh" href="#" target="_blank" rel="noopener" aria-label="GitHub"
+           class="nav-link text-muted hover:text-white text-sm transition-colors">GitHub</a>
+        <a id="nav-li" href="#" target="_blank" rel="noopener" aria-label="LinkedIn"
+           class="nav-link text-muted hover:text-white text-sm transition-colors">LinkedIn</a>
+        <a id="nav-email" href="#" aria-label="Email"
+           class="nav-link text-muted hover:text-white text-sm transition-colors">Email</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ─── HERO ─── -->
+  <header class="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <div class="pointer-events-none absolute -top-40 -left-40 h-[500px] w-[500px] rounded-full bg-accent-600/10 blur-[120px]"></div>
+    <div class="pointer-events-none absolute -bottom-40 -right-40 h-[400px] w-[400px] rounded-full bg-accent-500/8 blur-[100px]"></div>
+
+    <div class="relative z-10 mx-auto max-w-3xl px-6 text-center">
+      <div id="hero-photo-wrapper" class="mt-16 sm:mt-20 mb-10 hidden">
+        <img id="hero-photo" src="" alt="" class="mx-auto h-44 w-44 sm:h-52 sm:w-52 rounded-full border-[3px] border-accent-500/30 object-cover shadow-2xl shadow-accent-600/15 ring-4 ring-base-950/80" />
+      </div>
+      <p class="mb-4 inline-block rounded-full border border-accent-500/30 bg-accent-500/10 px-4 py-1.5 text-xs font-medium tracking-wide text-accent-400 uppercase hidden" id="hero-location"></p>
+      <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-tight tracking-tight" id="hero-name"></h1>
+      <p class="mt-3 text-base sm:text-lg font-medium text-accent-400" id="hero-role"></p>
+      <p id="hero-tagline" class="mt-6 text-lg sm:text-xl text-slate-400 max-w-xl mx-auto leading-relaxed"></p>
+      <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="#projects" id="hero-btn1"
+           class="inline-flex items-center gap-2 rounded-lg bg-accent-600 px-7 py-3 text-sm font-semibold text-white shadow-lg shadow-accent-600/25 transition hover:bg-accent-500 focus:outline-none focus:ring-2 focus:ring-accent-400 focus:ring-offset-2 focus:ring-offset-base-950">
+          <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          <span></span>
+        </a>
+        <a href="#contact" id="hero-btn2"
+           class="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-7 py-3 text-sm font-semibold text-white transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-accent-400 focus:ring-offset-2 focus:ring-offset-base-950">
+          <span></span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ─── SNAPSHOT ─── -->
+  <section class="relative py-24 fade-in">
+    <div class="mx-auto max-w-6xl px-6">
+      <h2 class="text-2xl sm:text-3xl font-bold text-white text-center mb-16" id="snapshot-title"></h2>
+      <div class="grid gap-8 md:grid-cols-2">
+        <div class="rounded-2xl border border-white/5 bg-surface-800/60 p-8">
+          <h3 class="text-xs font-semibold uppercase tracking-widest text-accent-400 mb-6" id="tech-title"></h3>
+          <div id="skills-container" class="flex flex-wrap gap-2.5"></div>
+        </div>
+        <div class="rounded-2xl border border-white/5 bg-surface-800/60 p-8">
+          <h3 class="text-xs font-semibold uppercase tracking-widest text-accent-400 mb-6" id="lang-title"></h3>
+          <div id="languages-container" class="space-y-4"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FEATURED PROJECTS ─── -->
+  <section id="projects" class="relative py-24 fade-in">
+    <div class="mx-auto max-w-6xl px-6">
+      <h2 class="text-2xl sm:text-3xl font-bold text-white text-center mb-4" id="projects-title"></h2>
+      <p class="text-center text-muted text-sm mb-16 max-w-lg mx-auto" id="projects-sub"></p>
+      <div id="projects-container" class="grid gap-8 md:grid-cols-2 lg:grid-cols-3"></div>
+    </div>
+  </section>
+
+  <!-- ─── WORK HIGHLIGHTS ─── -->
+  <section class="relative py-24 fade-in">
+    <div class="mx-auto max-w-6xl px-6">
+      <h2 class="text-2xl sm:text-3xl font-bold text-white text-center mb-4" id="work-title"></h2>
+      <p class="text-center text-muted text-sm mb-16 max-w-lg mx-auto" id="work-sub"></p>
+      <div id="work-container" class="grid gap-8 md:grid-cols-2"></div>
+    </div>
+  </section>
+
+  <!-- ─── EDUCATION & COMMUNITY ─── -->
+  <section class="relative py-24 fade-in">
+    <div class="mx-auto max-w-6xl px-6">
+      <h2 class="text-2xl sm:text-3xl font-bold text-white text-center mb-16" id="edu-title"></h2>
+      <div class="grid gap-8 md:grid-cols-2">
+        <div class="rounded-2xl border border-white/5 bg-surface-800/60 p-7">
+          <h3 class="text-xs font-semibold uppercase tracking-widest text-accent-400 mb-6" id="edu-label"></h3>
+          <div id="education-container" class="space-y-5"></div>
+        </div>
+        <div class="rounded-2xl border border-white/5 bg-surface-800/60 p-7">
+          <h3 class="text-xs font-semibold uppercase tracking-widest text-accent-400 mb-6" id="community-label"></h3>
+          <div id="community-container" class="space-y-5"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── LAB / ARCHIVED ─── -->
+  <section id="lab-section" class="relative py-24 fade-in hidden">
+    <div class="mx-auto max-w-6xl px-6">
+      <h2 class="text-2xl sm:text-3xl font-bold text-white text-center mb-4" id="lab-title"></h2>
+      <p class="text-center text-muted text-sm mb-16 max-w-lg mx-auto" id="lab-sub"></p>
+      <div id="lab-container" class="grid gap-8 md:grid-cols-2 lg:grid-cols-3"></div>
+    </div>
+  </section>
+
+  <!-- ─── ABOUT ─── -->
+  <section class="relative py-24 fade-in">
+    <div class="mx-auto max-w-3xl px-6 text-center">
+      <h2 class="text-2xl sm:text-3xl font-bold text-white mb-8" id="about-title"></h2>
+      <div id="about-text" class="text-slate-400 leading-relaxed text-base sm:text-lg text-left"></div>
+    </div>
+  </section>
+
+  <!-- ─── CONTACT ─── -->
+  <section id="contact" class="relative py-24 fade-in">
+    <div class="mx-auto max-w-2xl px-6 text-center">
+      <h2 class="text-2xl sm:text-3xl font-bold text-white mb-4" id="contact-title"></h2>
+      <p class="text-muted text-sm mb-12" id="contact-sub"></p>
+      <div id="contact-links" class="flex flex-col sm:flex-row items-center justify-center gap-4"></div>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ─── -->
+  <footer class="border-t border-white/5 py-8">
+    <div class="mx-auto max-w-6xl px-6 text-center text-xs text-slate-500">
+      &copy; <span id="footer-year"></span> <span id="footer-name"></span>. <span id="footer-text"></span>
+    </div>
+  </footer>
+
+  <!-- ══════════════════════════════════════════════
+       RENDER LOGIC
+  ══════════════════════════════════════════════ -->
+  <script>
+    (function () {
+      const D = SITE_DATA;
+      const p = D.profile;
+      let currentLang = "en";
+
+      /* ── Helpers ── */
+      const $ = (id) => document.getElementById(id);
+      const esc = (s) => {
+        const d = document.createElement("div");
+        d.textContent = s;
+        return d.innerHTML;
+      };
+      const t = (key) => D.i18n[currentLang][key] || D.i18n.en[key] || "";
+      const badgeHTML = (text) =>
+        `<span class="badge inline-block rounded-full border border-accent-500/20 bg-accent-500/10 px-3 py-1 text-xs font-medium text-accent-400 cursor-default">${esc(text)}</span>`;
+      const statusColor = (s) => {
+        const l = s.toLowerCase();
+        if (l.includes("archived") || l.includes("archivado") || l.includes("arquivado")) return "text-slate-500 border-slate-600/30 bg-slate-600/10";
+        if (l.includes("wip") || l.includes("progress") || l.includes("desarrollo") || l.includes("andamento")) return "text-amber-400 border-amber-500/30 bg-amber-500/10";
+        return "text-emerald-400 border-emerald-500/30 bg-emerald-500/10";
+      };
+
+      /* ── Static (run once) ── */
+      $("nav-name").textContent  = p.name;
+      $("nav-gh").href           = p.github;
+      $("nav-li").href           = p.linkedin;
+      $("nav-email").href        = "mailto:" + p.email;
+      $("hero-name").textContent = p.name;
+      $("hero-role").textContent = p.role;
+      if (p.location) {
+        $("hero-location").textContent = p.location;
+        $("hero-location").classList.remove("hidden");
+      }
+      $("footer-year").textContent   = new Date().getFullYear();
+      $("footer-name").textContent   = p.name;
+      $("skills-container").innerHTML = D.skills.map(badgeHTML).join("");
+
+      if (p.photo) {
+        $("hero-photo").src = p.photo;
+        $("hero-photo").alt = "Photo of " + p.name;
+        $("hero-photo-wrapper").classList.remove("hidden");
+      }
+
+      /* ── Render (re-runs on lang change) ── */
+      function render() {
+        document.documentElement.lang = currentLang;
+
+        /* Hero */
+        $("hero-tagline").textContent = t("tagline");
+        $("hero-btn1").querySelector("span").textContent = t("heroBtn1");
+        $("hero-btn2").querySelector("span").textContent = t("heroBtn2");
+
+        /* Snapshot */
+        $("snapshot-title").textContent = t("snapshotTitle");
+        $("tech-title").textContent     = t("techTitle");
+        $("lang-title").textContent     = t("langTitle");
+        $("languages-container").innerHTML = D.languages.map((l) => {
+          const level = typeof l.level === "object" ? (l.level[currentLang] || l.level.en) : l.level;
+          return `<div class="flex items-center justify-between">
+            <span class="text-white font-medium text-sm">${esc(l.label)}</span>
+            <span class="text-xs text-muted rounded-full border border-white/10 bg-white/5 px-3 py-1">${esc(level)}</span>
+          </div>`;
+        }).join("");
+
+        /* Projects */
+        $("projects-title").textContent = t("projectsTitle");
+        $("projects-sub").textContent   = t("projectsSub");
+        $("projects-container").innerHTML = D.featuredProjects.map((proj) => {
+          const btns = [];
+          if (proj.demoUrl) btns.push(`<a href="${esc(proj.demoUrl)}" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 rounded-lg bg-accent-600 px-4 py-2 text-xs font-semibold text-white transition hover:bg-accent-500" aria-label="Demo ${esc(proj.title)}">Demo</a>`);
+          if (proj.repoUrl) btns.push(`<a href="${esc(proj.repoUrl)}" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold text-white transition hover:bg-white/10" aria-label="Repo ${esc(proj.title)}">Repo</a>`);
+          const img = proj.image ? `<img src="${esc(proj.image)}" alt="${esc(proj.title)}" class="w-full h-44 object-cover rounded-xl mb-5" />` : "";
+          return `
+          <article class="card-hover flex flex-col rounded-2xl border border-white/5 bg-surface-800/60 p-7">
+            ${img}
+            <div class="flex items-start justify-between mb-4">
+              <h3 class="text-lg font-semibold text-white">${esc(proj.title)}</h3>
+              <span class="shrink-0 ml-3 rounded-full border px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${statusColor(proj.status)}">${esc(proj.status)}</span>
+            </div>
+            <p class="text-sm text-slate-400 mb-5 leading-relaxed">${esc(proj.oneLiner)}</p>
+            <div class="space-y-3 mb-6 text-sm">
+              <div><span class="font-medium text-accent-400">${esc(t("problemLabel"))}:</span> <span class="text-slate-400">${esc(proj.problem)}</span></div>
+              <div><span class="font-medium text-accent-400">${esc(t("solutionLabel"))}:</span> <span class="text-slate-400">${esc(proj.solution)}</span></div>
+              <div><span class="font-medium text-accent-400">${esc(t("impactLabel"))}:</span> <span class="text-slate-400">${esc(proj.impact)}</span></div>
+            </div>
+            <div class="mt-auto">
+              <div class="flex flex-wrap gap-1.5 mb-5">${proj.stack.map(badgeHTML).join("")}</div>
+              ${btns.length ? `<div class="flex gap-3">${btns.join("")}</div>` : ""}
+            </div>
+          </article>`;
+        }).join("");
+
+        /* Work */
+        $("work-title").textContent = t("workTitle");
+        $("work-sub").textContent   = t("workSub");
+        $("work-container").innerHTML = D.workHighlights.map((w) => `
+          <article class="card-hover flex flex-col rounded-2xl border border-white/5 bg-surface-800/60 p-7">
+            <h3 class="text-lg font-semibold text-white mb-4">${esc(w.title)}</h3>
+            <ul class="space-y-2 mb-6 text-sm text-slate-400 list-none">
+              ${w.bullets.map((b) => `<li class="flex items-start gap-2"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent-500"></span><span>${esc(b)}</span></li>`).join("")}
+            </ul>
+            <div class="mt-auto flex flex-wrap gap-1.5">${w.stack.map(badgeHTML).join("")}</div>
+          </article>
+        `).join("");
+
+        /* Education */
+        $("edu-title").textContent       = t("eduTitle");
+        $("edu-label").textContent       = t("eduLabel");
+        $("community-label").textContent = t("communityLabel");
+        $("education-container").innerHTML = D.education.map((e) => `
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <p class="text-white font-medium text-sm">${esc(e.degree)}</p>
+              <p class="text-xs text-slate-500 mt-0.5">${esc(e.institution)}</p>
+            </div>
+            <span class="shrink-0 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-1 text-[10px] font-semibold text-emerald-400 uppercase tracking-wider">${esc(t("completed"))}</span>
+          </div>
+        `).join("");
+
+        /* Community */
+        $("community-container").innerHTML = D.communityRoles.map((r) => {
+          const desc = typeof r.description === "object" ? (r.description[currentLang] || r.description.en) : r.description;
+          return `
+          <div>
+            <p class="text-white font-medium text-sm">${esc(r.role)}</p>
+            <p class="text-xs text-accent-400/70 mt-0.5">${esc(r.organization)}</p>
+            <p class="text-sm text-slate-400 mt-2 leading-relaxed">${esc(desc)}</p>
+          </div>`;
+        }).join("");
+
+        /* Lab */
+        if (D.labProjects && D.labProjects.length) {
+          $("lab-section").classList.remove("hidden");
+          $("lab-title").textContent = t("labTitle");
+          $("lab-sub").textContent   = t("labSub");
+          $("lab-container").innerHTML = D.labProjects.map((l) => {
+            const repoBtn = l.repoUrl ? `<a href="${esc(l.repoUrl)}" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold text-white transition hover:bg-white/10 mt-4" aria-label="Repo ${esc(l.title)}">Repo</a>` : "";
+            return `
+            <article class="card-hover flex flex-col rounded-2xl border border-white/5 bg-surface-800/60 p-7">
+              <div class="flex items-start justify-between mb-4">
+                <h3 class="text-lg font-semibold text-white">${esc(l.title)}</h3>
+                <span class="shrink-0 ml-3 rounded-full border px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${statusColor(l.status)}">${esc(l.status)}</span>
+              </div>
+              <p class="text-sm text-slate-400 leading-relaxed"><span class="font-medium text-accent-400">${esc(t("learnedLabel"))}:</span> ${esc(l.whatILearned)}</p>
+              <div class="mt-auto">
+                <div class="flex flex-wrap gap-1.5 mt-5">${l.stack.map(badgeHTML).join("")}</div>
+                ${repoBtn}
+              </div>
+            </article>`;
+          }).join("");
+        }
+
+        /* About */
+        $("about-title").textContent = t("aboutTitle");
+        const aboutParagraphs = t("aboutText").split("\n").filter(Boolean);
+        $("about-text").innerHTML = aboutParagraphs.map((p) => `<p class="mb-4">${esc(p)}</p>`).join("");
+
+        /* Contact */
+        $("contact-title").textContent = t("contactTitle");
+        $("contact-sub").textContent   = t("contactSub");
+        const contactItems = [
+          { href: "mailto:" + p.email, label: "Email", icon: "M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" },
+          { href: p.linkedin, label: "LinkedIn", icon: "M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM4 6a2 2 0 100-4 2 2 0 000 4z" },
+          { href: p.github, label: "GitHub", icon: "M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.167 6.839 9.49.5.09.682-.218.682-.483 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.607.069-.607 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.091-.647.35-1.087.636-1.337-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844a9.59 9.59 0 012.504.337c1.909-1.294 2.748-1.025 2.748-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z" },
+        ];
+        if (p.showPhone && p.phone) {
+          contactItems.push({ href: "tel:" + p.phone, label: "Phone", icon: "M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" });
+        }
+        $("contact-links").innerHTML = contactItems.map((c) => `
+          <a href="${esc(c.href)}" target="${c.href.startsWith("mailto") || c.href.startsWith("tel") ? "_self" : "_blank"}" rel="noopener"
+             aria-label="${esc(c.label)}"
+             class="inline-flex items-center gap-2.5 rounded-xl border border-white/10 bg-white/5 px-6 py-3.5 text-sm font-medium text-white transition hover:bg-white/10 hover:border-accent-500/40">
+            <svg class="h-4 w-4 text-accent-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="${c.icon}"/></svg>
+            ${esc(c.label)}
+          </a>
+        `).join("");
+
+        /* Footer */
+        $("footer-text").textContent = t("footerText");
+      }
+
+      /* ── Language switcher ── */
+      document.querySelectorAll("#lang-switcher .lang-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          currentLang = btn.dataset.lang;
+          document.querySelectorAll("#lang-switcher .lang-btn").forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          render();
+        });
+      });
+
+      /* ── Initial render ── */
+      render();
+
+      /* ── Scroll animations ── */
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("visible"); observer.unobserve(e.target); } });
+      }, { threshold: 0.12 });
+      document.querySelectorAll(".fade-in").forEach((el) => observer.observe(el));
+
+    })();
+  </script>
+</body>
+</html>
