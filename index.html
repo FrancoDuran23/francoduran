@@ -41,6 +41,17 @@
     .nav-link:hover::after { width:100%; }
     .lang-btn { transition: all .2s ease; }
     .lang-btn.active { background: #2563eb; color: #fff; border-color: #2563eb; }
+    /* Mobile menu */
+    .mobile-menu { display:none; }
+    .mobile-menu.open { display:flex; }
+    @media(max-width:639px) {
+      .desktop-nav { display:none; }
+      .mobile-toggle { display:flex; }
+    }
+    @media(min-width:640px) {
+      .mobile-toggle { display:none; }
+      .mobile-menu { display:none !important; }
+    }
   </style>
 
   <!-- ══════════════════════════════════════════════
@@ -285,8 +296,8 @@
   <nav id="navbar" class="fixed top-0 inset-x-0 z-50 border-b border-white/5 bg-base-950/80 backdrop-blur-md">
     <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
       <a href="#" class="text-lg font-semibold text-white tracking-tight" id="nav-name"></a>
-      <div class="flex items-center gap-4">
-        <!-- Language switcher -->
+      <!-- Desktop nav -->
+      <div class="desktop-nav flex items-center gap-4">
         <div class="flex items-center gap-1 mr-2" id="lang-switcher">
           <button data-lang="en" class="lang-btn text-[11px] font-semibold px-2.5 py-1 rounded-md border border-white/10 text-slate-400 hover:text-white active" aria-label="English">EN</button>
           <button data-lang="es" class="lang-btn text-[11px] font-semibold px-2.5 py-1 rounded-md border border-white/10 text-slate-400 hover:text-white" aria-label="Español">ES</button>
@@ -299,6 +310,23 @@
         <a id="nav-email" href="#" aria-label="Email"
            class="nav-link text-muted hover:text-white text-sm transition-colors">Email</a>
       </div>
+      <!-- Mobile: lang switcher + hamburger -->
+      <div class="mobile-toggle items-center gap-3">
+        <div class="flex items-center gap-1" id="lang-switcher-mobile">
+          <button data-lang="en" class="lang-btn text-[11px] font-semibold px-2.5 py-1 rounded-md border border-white/10 text-slate-400 hover:text-white active" aria-label="English">EN</button>
+          <button data-lang="es" class="lang-btn text-[11px] font-semibold px-2.5 py-1 rounded-md border border-white/10 text-slate-400 hover:text-white" aria-label="Español">ES</button>
+          <button data-lang="pt" class="lang-btn text-[11px] font-semibold px-2.5 py-1 rounded-md border border-white/10 text-slate-400 hover:text-white" aria-label="Português">PT</button>
+        </div>
+        <button id="mobile-menu-btn" aria-label="Menu" class="text-slate-400 hover:text-white transition-colors p-1">
+          <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+    <!-- Mobile dropdown -->
+    <div id="mobile-menu" class="mobile-menu flex-col gap-3 px-6 pb-4 border-t border-white/5 bg-base-950/95 backdrop-blur-md">
+      <a id="nav-gh-m" href="#" target="_blank" rel="noopener" class="text-muted hover:text-white text-sm py-2 transition-colors">GitHub</a>
+      <a id="nav-li-m" href="#" target="_blank" rel="noopener" class="text-muted hover:text-white text-sm py-2 transition-colors">LinkedIn</a>
+      <a id="nav-email-m" href="#" class="text-muted hover:text-white text-sm py-2 transition-colors">Email</a>
     </div>
   </nav>
 
@@ -307,22 +335,22 @@
     <div class="pointer-events-none absolute -top-40 -left-40 h-[500px] w-[500px] rounded-full bg-accent-600/10 blur-[120px]"></div>
     <div class="pointer-events-none absolute -bottom-40 -right-40 h-[400px] w-[400px] rounded-full bg-accent-500/8 blur-[100px]"></div>
 
-    <div class="relative z-10 mx-auto max-w-3xl px-6 text-center">
-      <div id="hero-photo-wrapper" class="mt-16 sm:mt-20 mb-10 hidden">
-        <img id="hero-photo" src="" alt="" class="mx-auto h-44 w-44 sm:h-52 sm:w-52 rounded-full border-[3px] border-accent-500/30 object-cover shadow-2xl shadow-accent-600/15 ring-4 ring-base-950/80" />
+    <div class="relative z-10 mx-auto max-w-3xl px-4 sm:px-6 text-center">
+      <div id="hero-photo-wrapper" class="mt-16 sm:mt-20 mb-8 sm:mb-10 hidden">
+        <img id="hero-photo" src="" alt="" class="mx-auto h-36 w-36 sm:h-44 sm:w-44 md:h-52 md:w-52 rounded-full border-[3px] border-accent-500/30 object-cover shadow-2xl shadow-accent-600/15 ring-4 ring-base-950/80" />
       </div>
       <p class="mb-4 inline-block rounded-full border border-accent-500/30 bg-accent-500/10 px-4 py-1.5 text-xs font-medium tracking-wide text-accent-400 uppercase hidden" id="hero-location"></p>
-      <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-tight tracking-tight" id="hero-name"></h1>
-      <p class="mt-3 text-base sm:text-lg font-medium text-accent-400" id="hero-role"></p>
-      <p id="hero-tagline" class="mt-6 text-lg sm:text-xl text-slate-400 max-w-xl mx-auto leading-relaxed"></p>
-      <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+      <h1 class="text-3xl sm:text-5xl md:text-6xl font-bold text-white leading-tight tracking-tight" id="hero-name"></h1>
+      <p class="mt-2 sm:mt-3 text-sm sm:text-base md:text-lg font-medium text-accent-400" id="hero-role"></p>
+      <p id="hero-tagline" class="mt-4 sm:mt-6 text-base sm:text-lg md:text-xl text-slate-400 max-w-xl mx-auto leading-relaxed"></p>
+      <div class="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
         <a href="#projects" id="hero-btn1"
-           class="inline-flex items-center gap-2 rounded-lg bg-accent-600 px-7 py-3 text-sm font-semibold text-white shadow-lg shadow-accent-600/25 transition hover:bg-accent-500 focus:outline-none focus:ring-2 focus:ring-accent-400 focus:ring-offset-2 focus:ring-offset-base-950">
+           class="inline-flex items-center justify-center gap-2 rounded-lg bg-accent-600 px-7 py-3 text-sm font-semibold text-white shadow-lg shadow-accent-600/25 transition hover:bg-accent-500 focus:outline-none focus:ring-2 focus:ring-accent-400 focus:ring-offset-2 focus:ring-offset-base-950 w-full sm:w-auto">
           <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
           <span></span>
         </a>
         <a href="#contact" id="hero-btn2"
-           class="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-7 py-3 text-sm font-semibold text-white transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-accent-400 focus:ring-offset-2 focus:ring-offset-base-950">
+           class="inline-flex items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/5 px-7 py-3 text-sm font-semibold text-white transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-accent-400 focus:ring-offset-2 focus:ring-offset-base-950 w-full sm:w-auto">
           <span></span>
         </a>
       </div>
@@ -330,16 +358,16 @@
   </header>
 
   <!-- ─── SNAPSHOT ─── -->
-  <section class="relative py-24 fade-in">
-    <div class="mx-auto max-w-6xl px-6">
-      <h2 class="text-2xl sm:text-3xl font-bold text-white text-center mb-16" id="snapshot-title"></h2>
-      <div class="grid gap-8 md:grid-cols-2">
-        <div class="rounded-2xl border border-white/5 bg-surface-800/60 p-8">
-          <h3 class="text-xs font-semibold uppercase tracking-widest text-accent-400 mb-6" id="tech-title"></h3>
-          <div id="skills-container" class="flex flex-wrap gap-2.5"></div>
+  <section class="relative py-14 sm:py-24 fade-in">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6">
+      <h2 class="text-2xl sm:text-3xl font-bold text-white text-center mb-10 sm:mb-16" id="snapshot-title"></h2>
+      <div class="grid gap-5 sm:gap-8 md:grid-cols-2">
+        <div class="rounded-2xl border border-white/5 bg-surface-800/60 p-5 sm:p-8">
+          <h3 class="text-xs font-semibold uppercase tracking-widest text-accent-400 mb-5 sm:mb-6" id="tech-title"></h3>
+          <div id="skills-container" class="flex flex-wrap gap-2"></div>
         </div>
-        <div class="rounded-2xl border border-white/5 bg-surface-800/60 p-8">
-          <h3 class="text-xs font-semibold uppercase tracking-widest text-accent-400 mb-6" id="lang-title"></h3>
+        <div class="rounded-2xl border border-white/5 bg-surface-800/60 p-5 sm:p-8">
+          <h3 class="text-xs font-semibold uppercase tracking-widest text-accent-400 mb-5 sm:mb-6" id="lang-title"></h3>
           <div id="languages-container" class="space-y-4"></div>
         </div>
       </div>
@@ -347,34 +375,34 @@
   </section>
 
   <!-- ─── FEATURED PROJECTS ─── -->
-  <section id="projects" class="relative py-24 fade-in">
-    <div class="mx-auto max-w-6xl px-6">
-      <h2 class="text-2xl sm:text-3xl font-bold text-white text-center mb-4" id="projects-title"></h2>
-      <p class="text-center text-muted text-sm mb-16 max-w-lg mx-auto" id="projects-sub"></p>
-      <div id="projects-container" class="grid gap-8 md:grid-cols-2"></div>
+  <section id="projects" class="relative py-14 sm:py-24 fade-in">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6">
+      <h2 class="text-2xl sm:text-3xl font-bold text-white text-center mb-3 sm:mb-4" id="projects-title"></h2>
+      <p class="text-center text-muted text-sm mb-10 sm:mb-16 max-w-lg mx-auto" id="projects-sub"></p>
+      <div id="projects-container" class="grid gap-5 sm:gap-8 md:grid-cols-2"></div>
     </div>
   </section>
 
   <!-- ─── WORK HIGHLIGHTS ─── -->
-  <section class="relative py-24 fade-in">
-    <div class="mx-auto max-w-6xl px-6">
-      <h2 class="text-2xl sm:text-3xl font-bold text-white text-center mb-4" id="work-title"></h2>
-      <p class="text-center text-muted text-sm mb-16 max-w-lg mx-auto" id="work-sub"></p>
-      <div id="work-container" class="grid gap-8 md:grid-cols-2"></div>
+  <section class="relative py-14 sm:py-24 fade-in">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6">
+      <h2 class="text-2xl sm:text-3xl font-bold text-white text-center mb-3 sm:mb-4" id="work-title"></h2>
+      <p class="text-center text-muted text-sm mb-10 sm:mb-16 max-w-lg mx-auto" id="work-sub"></p>
+      <div id="work-container" class="grid gap-5 sm:gap-8 md:grid-cols-2"></div>
     </div>
   </section>
 
   <!-- ─── EDUCATION & COMMUNITY ─── -->
-  <section class="relative py-24 fade-in">
-    <div class="mx-auto max-w-6xl px-6">
-      <h2 class="text-2xl sm:text-3xl font-bold text-white text-center mb-16" id="edu-title"></h2>
-      <div class="grid gap-8 md:grid-cols-2">
-        <div class="rounded-2xl border border-white/5 bg-surface-800/60 p-7">
-          <h3 class="text-xs font-semibold uppercase tracking-widest text-accent-400 mb-6" id="edu-label"></h3>
+  <section class="relative py-14 sm:py-24 fade-in">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6">
+      <h2 class="text-2xl sm:text-3xl font-bold text-white text-center mb-10 sm:mb-16" id="edu-title"></h2>
+      <div class="grid gap-5 sm:gap-8 md:grid-cols-2">
+        <div class="rounded-2xl border border-white/5 bg-surface-800/60 p-5 sm:p-7">
+          <h3 class="text-xs font-semibold uppercase tracking-widest text-accent-400 mb-5 sm:mb-6" id="edu-label"></h3>
           <div id="education-container" class="space-y-5"></div>
         </div>
-        <div class="rounded-2xl border border-white/5 bg-surface-800/60 p-7">
-          <h3 class="text-xs font-semibold uppercase tracking-widest text-accent-400 mb-6" id="community-label"></h3>
+        <div class="rounded-2xl border border-white/5 bg-surface-800/60 p-5 sm:p-7">
+          <h3 class="text-xs font-semibold uppercase tracking-widest text-accent-400 mb-5 sm:mb-6" id="community-label"></h3>
           <div id="community-container" class="space-y-5"></div>
         </div>
       </div>
@@ -382,34 +410,34 @@
   </section>
 
   <!-- ─── LAB / ARCHIVED ─── -->
-  <section id="lab-section" class="relative py-24 fade-in hidden">
-    <div class="mx-auto max-w-6xl px-6">
-      <h2 class="text-2xl sm:text-3xl font-bold text-white text-center mb-4" id="lab-title"></h2>
-      <p class="text-center text-muted text-sm mb-16 max-w-lg mx-auto" id="lab-sub"></p>
-      <div id="lab-container" class="grid gap-8 md:grid-cols-2 lg:grid-cols-3"></div>
+  <section id="lab-section" class="relative py-14 sm:py-24 fade-in hidden">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6">
+      <h2 class="text-2xl sm:text-3xl font-bold text-white text-center mb-3 sm:mb-4" id="lab-title"></h2>
+      <p class="text-center text-muted text-sm mb-10 sm:mb-16 max-w-lg mx-auto" id="lab-sub"></p>
+      <div id="lab-container" class="grid gap-5 sm:gap-8 md:grid-cols-2 lg:grid-cols-3"></div>
     </div>
   </section>
 
   <!-- ─── ABOUT ─── -->
-  <section class="relative py-24 fade-in">
-    <div class="mx-auto max-w-3xl px-6 text-center">
-      <h2 class="text-2xl sm:text-3xl font-bold text-white mb-8" id="about-title"></h2>
-      <div id="about-text" class="text-slate-400 leading-relaxed text-base sm:text-lg text-left"></div>
+  <section class="relative py-14 sm:py-24 fade-in">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 text-center">
+      <h2 class="text-2xl sm:text-3xl font-bold text-white mb-6 sm:mb-8" id="about-title"></h2>
+      <div id="about-text" class="text-slate-400 leading-relaxed text-sm sm:text-base md:text-lg text-left"></div>
     </div>
   </section>
 
   <!-- ─── CONTACT ─── -->
-  <section id="contact" class="relative py-24 fade-in">
-    <div class="mx-auto max-w-2xl px-6 text-center">
-      <h2 class="text-2xl sm:text-3xl font-bold text-white mb-4" id="contact-title"></h2>
-      <p class="text-muted text-sm mb-12" id="contact-sub"></p>
-      <div id="contact-links" class="flex flex-col sm:flex-row items-center justify-center gap-4"></div>
+  <section id="contact" class="relative py-14 sm:py-24 fade-in">
+    <div class="mx-auto max-w-2xl px-4 sm:px-6 text-center">
+      <h2 class="text-2xl sm:text-3xl font-bold text-white mb-3 sm:mb-4" id="contact-title"></h2>
+      <p class="text-muted text-sm mb-8 sm:mb-12" id="contact-sub"></p>
+      <div id="contact-links" class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4"></div>
     </div>
   </section>
 
   <!-- ─── FOOTER ─── -->
-  <footer class="border-t border-white/5 py-8">
-    <div class="mx-auto max-w-6xl px-6 text-center text-xs text-slate-500">
+  <footer class="border-t border-white/5 py-6 sm:py-8">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 text-center text-xs text-slate-500">
       &copy; <span id="footer-year"></span> <span id="footer-name"></span>. <span id="footer-text"></span>
     </div>
   </footer>
@@ -445,6 +473,10 @@
       $("nav-gh").href           = p.github;
       $("nav-li").href           = p.linkedin;
       $("nav-email").href        = "mailto:" + p.email;
+      /* Mobile nav links */
+      $("nav-gh-m").href         = p.github;
+      $("nav-li-m").href         = p.linkedin;
+      $("nav-email-m").href      = "mailto:" + p.email;
       $("hero-name").textContent = p.name;
       $("hero-role").textContent = p.role;
       if (p.location) {
@@ -489,9 +521,9 @@
           const btns = [];
           if (proj.demoUrl) btns.push(`<a href="${esc(proj.demoUrl)}" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 rounded-lg bg-accent-600 px-4 py-2 text-xs font-semibold text-white transition hover:bg-accent-500" aria-label="Demo ${esc(proj.title)}">Demo</a>`);
           if (proj.repoUrl) btns.push(`<a href="${esc(proj.repoUrl)}" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold text-white transition hover:bg-white/10" aria-label="Repo ${esc(proj.title)}">Repo</a>`);
-          const img = proj.image ? `<img src="${esc(proj.image)}" alt="${esc(proj.title)}" class="w-full h-44 object-cover rounded-xl mb-5" />` : "";
+          const img = proj.image ? `<img src="${esc(proj.image)}" alt="${esc(proj.title)}" class="w-full h-36 sm:h-44 object-cover rounded-xl mb-4 sm:mb-5" />` : "";
           return `
-          <article class="card-hover flex flex-col rounded-2xl border border-white/5 bg-surface-800/60 p-7">
+          <article class="card-hover flex flex-col rounded-2xl border border-white/5 bg-surface-800/60 p-5 sm:p-7">
             ${img}
             <div class="flex items-start justify-between mb-4">
               <h3 class="text-lg font-semibold text-white">${esc(proj.title)}</h3>
@@ -514,8 +546,8 @@
         $("work-title").textContent = t("workTitle");
         $("work-sub").textContent   = t("workSub");
         $("work-container").innerHTML = D.workHighlights.map((w) => `
-          <article class="card-hover flex flex-col rounded-2xl border border-white/5 bg-surface-800/60 p-7">
-            <h3 class="text-lg font-semibold text-white mb-4">${esc(w.title)}</h3>
+          <article class="card-hover flex flex-col rounded-2xl border border-white/5 bg-surface-800/60 p-5 sm:p-7">
+            <h3 class="text-base sm:text-lg font-semibold text-white mb-3 sm:mb-4">${esc(w.title)}</h3>
             <ul class="space-y-2 mb-6 text-sm text-slate-400 list-none">
               ${w.bullets.map((b) => `<li class="flex items-start gap-2"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent-500"></span><span>${esc(b)}</span></li>`).join("")}
             </ul>
@@ -589,7 +621,7 @@
         $("contact-links").innerHTML = contactItems.map((c) => `
           <a href="${esc(c.href)}" target="${c.href.startsWith("mailto") || c.href.startsWith("tel") ? "_self" : "_blank"}" rel="noopener"
              aria-label="${esc(c.label)}"
-             class="inline-flex items-center gap-2.5 rounded-xl border border-white/10 bg-white/5 px-6 py-3.5 text-sm font-medium text-white transition hover:bg-white/10 hover:border-accent-500/40">
+             class="inline-flex items-center justify-center gap-2.5 rounded-xl border border-white/10 bg-white/5 px-6 py-3.5 text-sm font-medium text-white transition hover:bg-white/10 hover:border-accent-500/40 w-full sm:w-auto">
             <svg class="h-4 w-4 text-accent-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="${c.icon}"/></svg>
             ${esc(c.label)}
           </a>
@@ -599,15 +631,29 @@
         $("footer-text").textContent = t("footerText");
       }
 
-      /* ── Language switcher ── */
-      document.querySelectorAll("#lang-switcher .lang-btn").forEach((btn) => {
+      /* ── Language switcher (desktop + mobile) ── */
+      const allLangBtns = document.querySelectorAll(".lang-btn");
+      allLangBtns.forEach((btn) => {
         btn.addEventListener("click", () => {
           currentLang = btn.dataset.lang;
-          document.querySelectorAll("#lang-switcher .lang-btn").forEach((b) => b.classList.remove("active"));
-          btn.classList.add("active");
+          allLangBtns.forEach((b) => b.classList.remove("active"));
+          document.querySelectorAll(`.lang-btn[data-lang="${currentLang}"]`).forEach((b) => b.classList.add("active"));
           render();
         });
       });
+
+      /* ── Mobile menu toggle ── */
+      const mobileMenuBtn = $("mobile-menu-btn");
+      const mobileMenu = $("mobile-menu");
+      if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener("click", () => {
+          mobileMenu.classList.toggle("open");
+        });
+        /* Close menu on link click */
+        mobileMenu.querySelectorAll("a").forEach((a) => {
+          a.addEventListener("click", () => mobileMenu.classList.remove("open"));
+        });
+      }
 
       /* ── Initial render ── */
       render();
