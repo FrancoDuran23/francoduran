@@ -44,12 +44,11 @@
     /* Mobile menu */
     .mobile-menu { display:none; }
     .mobile-menu.open { display:flex; }
-    @media(max-width:639px) {
-      .desktop-nav { display:none; }
-      .mobile-toggle { display:flex; }
-    }
+    .desktop-nav { display:none; }
+    .mobile-toggle { display:flex; }
     @media(min-width:640px) {
-      .mobile-toggle { display:none; }
+      .desktop-nav { display:flex; }
+      .mobile-toggle { display:none !important; }
       .mobile-menu { display:none !important; }
     }
   </style>
