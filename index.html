@@ -428,7 +428,7 @@ class Project(models.Model):
 
     <div class="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 grid gap-14 lg:grid-cols-[1.1fr_0.9fr] items-center">
       <!-- Text column -->
-      <div class="text-left min-w-0">
+      <div class="text-left min-w-0 order-2 lg:order-1">
         <p class="tag-mono mb-4 inline-flex items-center gap-2 text-xs sm:text-sm text-accent-400 uppercase tracking-widest">
           <span>&gt;</span><span id="hero-tag"></span><span class="text-white/40">_</span>
         </p>
@@ -455,7 +455,7 @@ class Project(models.Model):
       </div>
 
       <!-- Photo column -->
-      <div id="hero-photo-wrapper" class="relative mx-auto w-full min-w-0 max-w-[260px] sm:max-w-xs lg:max-w-md hidden">
+      <div id="hero-photo-wrapper" class="relative mx-auto w-full min-w-0 max-w-[260px] sm:max-w-xs lg:max-w-md hidden order-1 lg:order-2">
         <div class="absolute -top-8 -left-8 h-32 w-40 torn-shard bg-paper/95 rotate-[-6deg]"></div>
         <div class="absolute top-10 -left-4 h-20 w-24 torn-shard-alt bg-accent-600/80 rotate-[10deg]"></div>
         <div class="absolute -bottom-6 -right-6 h-28 w-32 torn-shard-alt bg-accent-500/60 rotate-[6deg]"></div>
