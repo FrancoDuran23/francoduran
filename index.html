@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Franco Duran — Fullstack Developer · Django</title>
-  <meta name="description" content="Franco Duran: Fullstack developer specialized in Django, Python, Go, TypeScript and more. IT Project Director, AI trainer for educators." />
+  <title>Franco Duran — Backend Developer · Python & Django</title>
+  <meta name="description" content="Franco Duran: Backend/Software Engineer specialized in Python, Django and production RAG systems. IT Project Director, AI trainer for educators." />
   <meta name="theme-color" content="#0a0f1a" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -15,16 +15,21 @@
             base:    { 950:'#050a14', 900:'#0a0f1a', 800:'#0f1629', 700:'#151d35' },
             accent:  { 400:'#60a5fa', 500:'#3b82f6', 600:'#2563eb' },
             surface: { 800:'#111827', 700:'#1a2236', 600:'#1e2a3f' },
+            paper:   '#eef1f6',
             muted:   '#94a3b8',
           },
-          fontFamily: { sans: ['Inter','system-ui','sans-serif'] },
+          fontFamily: {
+            sans: ['Inter','system-ui','sans-serif'],
+            display: ['"Archivo Black"','Inter','system-ui','sans-serif'],
+            mono: ['"JetBrains Mono"','ui-monospace','SFMono-Regular','monospace'],
+          },
         }
       }
     }
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Archivo+Black&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     body { background: #050a14; }
     ::-webkit-scrollbar { width: 6px; }
@@ -32,7 +37,7 @@
     ::-webkit-scrollbar-thumb { background: #1e2a3f; border-radius: 3px; }
     .card-hover { transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
     .card-hover:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(59,130,246,.12); border-color: #2563eb; }
-    .badge { transition: background .2s ease, color .2s ease; }
+    .badge { font-family: 'JetBrains Mono', ui-monospace, monospace; transition: background .2s ease, color .2s ease; }
     .badge:hover { background: #2563eb; color: #fff; }
     .fade-in { opacity:0; transform:translateY(18px); transition: opacity .5s ease, transform .5s ease; }
     .fade-in.visible { opacity:1; transform:translateY(0); }
@@ -44,6 +49,56 @@
     /* Mobile menu */
     .mobile-menu { display:none; }
     .mobile-menu.open { display:flex; }
+
+    /* ── Collage / torn-paper system ── */
+    .dot-grid {
+      background-image: radial-gradient(rgba(96,165,250,.35) 1px, transparent 1px);
+      background-size: 22px 22px;
+    }
+    .noise-overlay {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+    }
+    .tag-mono {
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+    }
+    /* Torn paper shard — decorative, behind headlines */
+    .torn-shard {
+      clip-path: polygon(4% 0%, 100% 8%, 96% 92%, 2% 100%, 8% 55%, 0% 48%);
+    }
+    .torn-shard-alt {
+      clip-path: polygon(0% 6%, 92% 0%, 100% 60%, 94% 100%, 40% 96%, 6% 88%);
+    }
+    /* Card torn corner accent (light touch, keeps text area clean) */
+    .torn-card { position: relative; overflow: hidden; }
+    .torn-card::after {
+      content: '';
+      position: absolute;
+      top: -14px; right: -14px;
+      width: 64px; height: 64px;
+      background: linear-gradient(135deg, rgba(96,165,250,.28), rgba(96,165,250,0) 70%);
+      clip-path: polygon(30% 0%, 100% 0%, 100% 70%, 70% 100%, 40% 85%, 20% 55%);
+      transform: rotate(-6deg);
+      pointer-events: none;
+    }
+    .tape {
+      position: absolute;
+      background: rgba(238,241,246,.9);
+      box-shadow: 0 2px 6px rgba(0,0,0,.25);
+    }
+    /* Die-cut sticker outline for the transparent hero cutout */
+    .sticker-cutout {
+      filter:
+        drop-shadow(3px 0 0 #eef1f6)
+        drop-shadow(-3px 0 0 #eef1f6)
+        drop-shadow(0 3px 0 #eef1f6)
+        drop-shadow(0 -3px 0 #eef1f6)
+        drop-shadow(2.4px 2.4px 0 #eef1f6)
+        drop-shadow(-2.4px 2.4px 0 #eef1f6)
+        drop-shadow(2.4px -2.4px 0 #eef1f6)
+        drop-shadow(-2.4px -2.4px 0 #eef1f6)
+        drop-shadow(0 18px 30px rgba(0,0,0,.5));
+    }
   </style>
 
   <!-- ══════════════════════════════════════════════
@@ -54,21 +109,23 @@
 
       profile: {
         name:      "Franco Duran",
-        role:      "Fullstack Developer · Django · Polyglot Stack",
+        role:      "Software Engineer · Python & Django · Backend",
         location:  "",
         email:     "francoduran232@gmail.com",
         github:    "https://github.com/francoduran23",
         linkedin:  "https://www.linkedin.com/in/francoduran23/",
         phone:     "YOUR_PHONE",
         showPhone: false,
-        photo:     "perfil.jpg",
+        photo:     "persona_recortada_original.png",
       },
 
       /* ── i18n ── */
       i18n: {
         en: {
-          tagline: "Fullstack developer focused on Django, Python and scalable systems. Currently building banking software at Dinardi Projects. IT Project Director & AI trainer for education professionals and government organizations.",
+          tagline: "Python developer with 5+ years shipping production software: solid engineering, full test coverage (pytest, Playwright) and cloud deployment (AWS, GCP). Currently building banking software at Dinardi Projects and running TalentBase, an AI matchmaking SaaS live with real clients. Also IT Project Director & AI trainer for education professionals and government organizations.",
           navProjects: "Projects",
+          heroTag: "backend developer",
+          heroNote: "SOLVING BACKEND PROBLEMS.\nBUILDING REAL IMPACT.",
           heroBtn1: "View projects",
           heroBtn2: "Contact me",
           snapshotTitle: "Tech & Languages",
@@ -88,15 +145,17 @@
           labSub: "Prototypes and experiments — what I learned matters more than the code.",
           learnedLabel: "Learned",
           aboutTitle: "About me",
-          aboutText: "Fullstack developer with a product mindset and a communicator profile. BSc in Information Technology from Universidad de Palermo and Analyst Programmer from UNJu.\n\nCurrently at Dinardi Projects building banking software, and at Lambda Solution developing and optimizing fiber optic systems. Previously, at the Anti-Corruption Office of Jujuy Province I implemented end-to-end solutions that significantly improved organizational efficiency, and I developed government web systems for the province.\n\nMy focus is on Python, Django and building scalable backends, always driven by adaptability and responsiveness to key client needs. I also occasionally coordinate AI training sessions and workshops for education professionals and government organizations as IT Project Director at a community training foundation in Jujuy, in collaboration with the Universidad Nacional de Jujuy.\n\nComfortable in remote, async and multicultural teams.",
+          aboutText: "Python developer with 5+ years building robust production software: object-oriented design, full test coverage (unit, integration, E2E with pytest and Playwright), CI/CD and cloud deployment (AWS, GCP). I've worked in consulting and public-sector environments shipping real deliverables, migrating legacy systems and designing for maintainability, including direct experience integrating credit bureaus, identity validation (KYC) and sensitive financial data.\n\nCurrently at Dinardi Projects building banking software — credit scoring, PDF data extraction, financial APIs — and running TalentBase, my own AI matchmaking SaaS live with real clients. Previously, at the Anti-Corruption Office of Jujuy Province I led a legacy migration to Django and built a production RAG system with LangChain over legal documentation, and at Lambda Solutions I migrated a C backend to Django and built fiber-optic network management systems.\n\nI also apply generative AI hands-on: RAG systems, LangChain, and AI coding tools (Claude Code, Harness Agents) in my daily workflow. As IT Project Director at a community training foundation in Jujuy, in collaboration with the Universidad Nacional de Jujuy, I coordinate AI training sessions for education professionals and government organizations.\n\nComfortable in remote, async and multicultural teams.",
           contactTitle: "Contact",
           contactSub: "Available for remote or hybrid opportunities.",
           footerText: "Built with focus, coffee and a bit of AI.",
           completed: "Completed",
         },
         es: {
-          tagline: "Desarrollador fullstack enfocado en Django, Python y sistemas escalables. Actualmente desarrollo software bancario en Dinardi Projects. Director de Proyectos IT y capacitador en IA para profesionales de la educación y organismos gubernamentales.",
+          tagline: "Desarrollador Python con más de 5 años construyendo software en producción: ingeniería sólida, cobertura de tests (pytest, Playwright) y despliegue en la nube (AWS, GCP). Actualmente desarrollo software bancario en Dinardi Projects y llevo adelante TalentBase, un SaaS de matchmaking con IA en producción con clientes reales. También soy Director de Proyectos IT y capacitador en IA para profesionales de la educación y organismos gubernamentales.",
           navProjects: "Proyectos",
+          heroTag: "desarrollador backend",
+          heroNote: "RESOLVIENDO PROBLEMAS BACKEND.\nCONSTRUYENDO IMPACTO REAL.",
           heroBtn1: "Ver proyectos",
           heroBtn2: "Contactar",
           snapshotTitle: "Tech & Idiomas",
@@ -116,15 +175,17 @@
           labSub: "Prototipos y experimentos — lo que aprendí importa más que el código.",
           learnedLabel: "Aprendizaje",
           aboutTitle: "Sobre mí",
-          aboutText: "Desarrollador fullstack con mentalidad de producto y perfil comunicador. Licenciado en Tecnologías de la Información por la Universidad de Palermo y Analista Programador por la UNJu.\n\nActualmente en Dinardi Projects desarrollo software bancario, y en Lambda Solution desarrollo y optimizo sistemas de fibra óptica. Anteriormente, en la Oficina Anticorrupción de la Provincia de Jujuy implementé soluciones integrales que mejoraron significativamente la eficiencia organizacional, y desarrollé sistemas web gubernamentales para la provincia.\n\nMi enfoque está en Python, Django y la construcción de backends escalables, siempre orientado a la adaptabilidad y respuesta a necesidades clave de clientes. Además, de forma ocasional coordino y dicto charlas y capacitaciones sobre inteligencia artificial para profesionales de la educación y organismos gubernamentales como Director de Proyectos IT en una fundación de capacitación comunitaria en Jujuy, en colaboración con la Universidad Nacional de Jujuy.\n\nCómodo en equipos remotos, async y multiculturales.",
+          aboutText: "Desarrollador Python con más de 5 años construyendo software robusto en producción: diseño orientado a objetos, cobertura de tests completa (unitarios, integración, E2E con pytest y Playwright), CI/CD y despliegue en la nube (AWS, GCP). Trabajé en consultoría y organismos públicos con entregas reales, migración de sistemas legacy y arquitecturas orientadas a la mantenibilidad, incluyendo experiencia directa integrando bureaus crediticios, validación de identidad (KYC) y datos financieros sensibles.\n\nActualmente en Dinardi Projects desarrollo software bancario — scoring crediticio, extracción de datos de PDFs, APIs financieras — y llevo adelante TalentBase, mi propio SaaS de matchmaking con IA, en producción con clientes reales. Antes, en la Oficina Anticorrupción de la Provincia de Jujuy lideré una migración de sistema legacy a Django y construí un sistema RAG en producción con LangChain sobre normativa legal, y en Lambda Solutions migré un backend en C a Django y desarrollé sistemas de gestión de redes de fibra óptica.\n\nTambién aplico IA generativa de forma concreta: sistemas RAG, LangChain, y herramientas de IA (Claude Code, Harness Agents) en mi flujo de trabajo diario. Como Director de Proyectos IT en una fundación de capacitación comunitaria en Jujuy, en colaboración con la Universidad Nacional de Jujuy, coordino charlas y capacitaciones en IA para profesionales de la educación y organismos gubernamentales.\n\nCómodo en equipos remotos, async y multiculturales.",
           contactTitle: "Contacto",
           contactSub: "Disponible para oportunidades remotas o híbridas.",
           footerText: "Hecho con foco, café y algo de IA.",
           completed: "Completo",
         },
         pt: {
-          tagline: "Desenvolvedor fullstack focado em Django, Python e sistemas escaláveis. Atualmente desenvolvendo software bancário na Dinardi Projects. Diretor de Projetos de TI e instrutor de IA para profissionais da educação e organizações governamentais.",
+          tagline: "Desenvolvedor Python com mais de 5 anos construindo software em produção: engenharia sólida, cobertura de testes (pytest, Playwright) e deploy em nuvem (AWS, GCP). Atualmente desenvolvendo software bancário na Dinardi Projects e liderando a TalentBase, um SaaS de matchmaking com IA em produção com clientes reais. Também sou Diretor de Projetos de TI e instrutor de IA para profissionais da educação e organizações governamentais.",
           navProjects: "Projetos",
+          heroTag: "desenvolvedor backend",
+          heroNote: "RESOLVENDO PROBLEMAS DE BACKEND.\nCONSTRUINDO IMPACTO REAL.",
           heroBtn1: "Ver projetos",
           heroBtn2: "Contato",
           snapshotTitle: "Tech & Idiomas",
@@ -144,7 +205,7 @@
           labSub: "Protótipos e experimentos — o que aprendi importa mais que o código.",
           learnedLabel: "Aprendizado",
           aboutTitle: "Sobre mim",
-          aboutText: "Desenvolvedor fullstack com mentalidade de produto e perfil comunicador. Bacharelado em Tecnologias da Informação pela Universidad de Palermo e Analista Programador pela UNJu.\n\nAtualmente na Dinardi Projects desenvolvo software bancário, e na Lambda Solution desenvolvo e otimizo sistemas de fibra óptica. Anteriormente, na Oficina Anticorrupción da Província de Jujuy implementei soluções integrais que melhoraram significativamente a eficiência organizacional, e desenvolvi sistemas web governamentais para a província.\n\nMeu foco está em Python, Django e construção de backends escaláveis, sempre orientado à adaptabilidade e resposta às necessidades dos clientes. Além disso, ocasionalmente coordeno e ministro palestras e capacitações sobre inteligência artificial para profissionais da educação e organizações governamentais como Diretor de Projetos de TI em uma fundação de capacitação comunitária em Jujuy, em colaboração com a Universidad Nacional de Jujuy.\n\nConfortável em equipes remotas, assíncronas e multiculturais.",
+          aboutText: "Desenvolvedor Python com mais de 5 anos construindo software robusto em produção: design orientado a objetos, cobertura de testes completa (unitários, integração, E2E com pytest e Playwright), CI/CD e deploy em nuvem (AWS, GCP). Trabalhei em consultoria e organismos públicos com entregas reais, migração de sistemas legados e arquiteturas orientadas à manutenibilidade, incluindo experiência direta integrando bureaus de crédito, validação de identidade (KYC) e dados financeiros sensíveis.\n\nAtualmente na Dinardi Projects desenvolvo software bancário — scoring de crédito, extração de dados de PDFs, APIs financeiras — e lidero a TalentBase, meu próprio SaaS de matchmaking com IA, em produção com clientes reais. Antes, na Oficina Anticorrupción da Província de Jujuy liderei uma migração de sistema legado para Django e construí um sistema RAG em produção com LangChain sobre normativa legal, e na Lambda Solutions migrei um backend em C para Django e desenvolvi sistemas de gestão de redes de fibra óptica.\n\nTambém aplico IA generativa de forma concreta: sistemas RAG, LangChain, e ferramentas de IA (Claude Code, Harness Agents) no meu fluxo de trabalho diário. Como Diretor de Projetos de TI em uma fundação de capacitação comunitária em Jujuy, em colaboração com a Universidad Nacional de Jujuy, coordeno palestras e capacitações em IA para profissionais da educação e organizações governamentais.\n\nConfortável em equipes remotas, assíncronas e multiculturais.",
           contactTitle: "Contato",
           contactSub: "Disponível para oportunidades remotas ou híbridas.",
           footerText: "Feito com foco, café e um pouco de IA.",
@@ -154,28 +215,45 @@
 
       languages: [
         { label: "Spanish",    level: { en:"Native", es:"Nativo", pt:"Nativo" } },
-        { label: "Portuguese", level: { en:"Basic",  es:"Básico", pt:"Básico" } },
-        { label: "English",    level: { en:"Intermediate", es:"Intermedio", pt:"Intermediário" } },
+        { label: "Portuguese", level: { en:"Intermediate", es:"Intermedio", pt:"Intermediário" } },
+        { label: "English",    level: { en:"Intermediate (B1)", es:"Intermedio (B1)", pt:"Intermediário (B1)" } },
       ],
 
       skills: [
-        "Django","Python","PostgreSQL","Redis",
-        "Docker","Nginx","Go","TypeScript","CI/CD",
-        "LangChain","Pandas","Bots / AI Agents","Data Science"
+        "Python","Django","FastAPI","HTMX","Celery",
+        "PostgreSQL","Redis","pytest","Playwright",
+        "Docker","AWS","GCP","LangChain","pgvector",
+        "MCP","Claude Code","Go",
       ],
+
+      heroPills: ["Python","Django","PostgreSQL","Redis","Docker","pytest"],
 
       featuredProjects: [
         {
-          title:    "Bora",
-          image:    "bora.png",
-          oneLiner: "Social travel app for solo travelers staying at hostels",
-          problem:  "Solo travelers struggle to find people to share plans and experiences with",
-          solution: "A platform where travelers can create and join group plans at hostels",
-          impact:   "Connects solo travelers, turning individual trips into shared adventures",
-          stack:    ["React","Supabase","Vercel"],
-          demoUrl:  "https://bora-app-nu.vercel.app",
+          title:    "TalentBase",
+          image:    "talentbase.jpg",
+          imagePosition: "object-top",
+          oneLiner: "AI-powered talent matchmaking SaaS — live with real clients",
+          problem:  "Recruiters struggle to match candidates to job openings efficiently with plain keyword search",
+          solution: "End-to-end SaaS matching candidates to vacancies with LLMs and Voyage AI embeddings, semantic scoring over pgvector and LLM-based ranking for match explainability",
+          impact:   "Multi-tenant Django backend live in production, giving recruiters automated, explainable candidate-fit reports",
+          stack:    ["Django","PostgreSQL","pgvector","LangChain","Voyage AI"],
+          demoUrl:  "",
           repoUrl:  "",
-          status:   "MVP",
+          status:   "Live",
+        },
+        {
+          title:    "Mission Match",
+          image:    "hackaton.jpg",
+          imagePosition: "object-[center_42%]",
+          oneLiner: "AI-powered volunteer matching for parishes — 1st place, Acutis Summit hackathon",
+          problem:  "Parish ministries struggle to match volunteers to the roles that best fit their skills, interests and availability",
+          solution: "An AI matching engine connecting volunteers to ministry roles using semantic search over skills and interests, following the same approach as TalentBase",
+          impact:   "Built end-to-end during the Acutis Summit hackathon (Expo Católica) — won 1st place as champion team",
+          stack:    ["Python","Django","PostgreSQL","pgvector","LangChain"],
+          demoUrl:  "",
+          repoUrl:  "",
+          status:   "Hackathon Winner",
         },
         {
           title:    "CIDEJ",
@@ -217,38 +295,37 @@
 
       workHighlights: [
         {
-          title:   "Dinardi Projects — Banking Software",
+          title:   "Dinardi Projects — Banking Software (2025–Present)",
           bullets: [
-            "Backend development for banking platforms and financial systems",
-            "Building scalable APIs and services handling sensitive financial data",
+            "Built PDF parsers for automatic financial data extraction (corporate structure, debt, management bodies), with unit and integration test coverage on real cases",
+            "Implemented an end-to-end credit scoring system with a state machine, integrating external bureaus (Nosis WS01) and financial APIs (SIDEBA)",
+            "Automated credit report generation (PDF via WeasyPrint) with financial ratio calculations and projected cash flow",
+            "Designed a roles and permissions architecture with 6 differentiated roles and complex approval workflows",
+            "Heavy daily use of Claude Code and Harness Agents for code generation, review and refactoring, without sacrificing test coverage",
           ],
-          stack: ["Python","Django","PostgreSQL","Docker","CI/CD"],
+          stack: ["Python 3.12","Django 5.2","HTMX","PostgreSQL","pytest","Playwright"],
         },
         {
-          title:   "Lambda Solution — Fiber Optic Systems",
+          title:   "Anti-Corruption Office — Jujuy Province (2021–2025)",
           bullets: [
-            "Built backend systems to manage and optimize fiber optic network infrastructure",
-            "Developed Python scripts and migrated legacy solutions to Django",
-            "Improved operational efficiency through automation and modern tooling",
+            "Led the modernization of a legacy C#/ASP.NET system to Python/Django: reverse engineering, architecture redesign and incremental delivery with per-module tests",
+            "Designed and implemented a full MVT system for financial disclosure statements, with sensitive-data handling, role-based access control and thorough validation",
+            "Built a production RAG system with LangChain for legal/regulatory queries, retrieving over a custom document base indexed with pgvector and Voyage AI embeddings",
+            "Automated legal document analysis with LLMs, reducing the team's repetitive manual work",
+            "Cut asset-disclosure report generation time by 40% with custom processing algorithms",
           ],
-          stack: ["Python","Go","Django","PostgreSQL","Redis"],
+          stack: ["Python","Django","PostgreSQL","LangChain","pgvector"],
         },
         {
-          title:   "Anti-Corruption Office — Jujuy Province",
+          title:   "Lambda Solutions — Backend & Fiber Optic Systems (2022–2025)",
           bullets: [
-            "Implemented end-to-end government management solutions",
-            "Streamlined internal processes and improved organizational efficiency",
-            "Developed and maintained government web systems for the province",
+            "Led the migration of a C backend to Django + Redis: legacy code analysis, reverse engineering and full architecture redesign",
+            "Developed Python scripts for correction, transformation and maintenance of production databases",
+            "Coordinated deployments on Google App Engine and Linux VMs, establishing repeatable delivery flows",
+            "Contributed to a fiber-optic network management app for telecom clients under short delivery cycles",
+            "Implemented MCP (Model Context Protocol) servers to expose internal tools to AI assistants and automate team operations",
           ],
-          stack: ["Python","Django","PostgreSQL","Nginx"],
-        },
-        {
-          title:   "Government Web Systems — Jujuy Province",
-          bullets: [
-            "Developed web platforms for provincial government agencies",
-            "Built fullstack solutions to digitize and modernize public services",
-          ],
-          stack: ["Django","Python","PostgreSQL","Docker","Nginx"],
+          stack: ["Python","Go","Django","PostgreSQL","Redis","MCP"],
         },
       ],
 
@@ -287,7 +364,7 @@
   <!-- ─── NAVBAR ─── -->
   <nav id="navbar" class="fixed top-0 inset-x-0 z-50 border-b border-white/5 bg-base-950/80 backdrop-blur-md">
     <div class="mx-auto flex max-w-6xl items-center justify-between px-4 sm:px-6 py-3 sm:py-4">
-      <a href="#" class="text-base sm:text-lg font-semibold text-white tracking-tight" id="nav-name"></a>
+      <a href="#" class="font-display text-sm sm:text-base uppercase text-white tracking-tight" id="nav-name"></a>
       <!-- Desktop nav -->
       <div class="hidden sm:flex items-center gap-4">
         <div class="flex items-center gap-1 mr-2" id="lang-switcher">
@@ -335,43 +412,76 @@
   </nav>
 
   <!-- ─── HERO ─── -->
-  <header class="relative min-h-screen flex items-center justify-center overflow-hidden">
+  <header class="relative min-h-screen flex items-center overflow-hidden pt-28 pb-16 sm:pt-24">
     <div class="pointer-events-none absolute -top-40 -left-40 h-[500px] w-[500px] rounded-full bg-accent-600/10 blur-[120px]"></div>
     <div class="pointer-events-none absolute -bottom-40 -right-40 h-[400px] w-[400px] rounded-full bg-accent-500/8 blur-[100px]"></div>
+    <div class="pointer-events-none absolute top-20 left-0 h-56 w-56 dot-grid opacity-40 hidden sm:block"></div>
+    <pre class="pointer-events-none absolute top-24 right-6 hidden xl:block tag-mono text-[11px] leading-5 text-accent-400/25 select-none">from django.db import models
 
-    <div class="relative z-10 mx-auto max-w-3xl px-4 sm:px-6 text-center">
-      <div id="hero-photo-wrapper" class="mt-16 sm:mt-20 mb-8 sm:mb-10 hidden">
-        <img id="hero-photo" src="" alt="" class="mx-auto h-36 w-36 sm:h-44 sm:w-44 md:h-52 md:w-52 rounded-full border-[3px] border-accent-500/30 object-cover shadow-2xl shadow-accent-600/15 ring-4 ring-base-950/80" />
+class Project(models.Model):
+    name = models.CharField(max_length=120)
+    description = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name</pre>
+
+    <div class="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 grid gap-14 lg:grid-cols-[1.1fr_0.9fr] items-center">
+      <!-- Text column -->
+      <div class="text-left min-w-0">
+        <p class="tag-mono mb-4 inline-flex items-center gap-2 text-xs sm:text-sm text-accent-400 uppercase tracking-widest">
+          <span>&gt;</span><span id="hero-tag"></span><span class="text-white/40">_</span>
+        </p>
+        <h1 class="font-display uppercase leading-[0.92] tracking-tight text-white text-5xl sm:text-6xl md:text-7xl">
+          <span id="hero-name-first" class="block"></span><span id="hero-name-last" class="block text-accent-500"></span>
+        </h1>
+        <p class="mt-4 tag-mono text-xs text-slate-500 uppercase tracking-widest hidden" id="hero-location"></p>
+        <p id="hero-role" class="mt-5 text-sm sm:text-base font-semibold text-white/90"></p>
+        <p id="hero-tagline" class="mt-4 text-sm sm:text-base text-slate-400 max-w-xl leading-relaxed"></p>
+
+        <div id="hero-pills" class="mt-7 flex flex-wrap gap-x-6 gap-y-3"></div>
+
+        <div class="mt-9 flex flex-col sm:flex-row items-start gap-3 sm:gap-4">
+          <a href="#projects" id="hero-btn1"
+             class="group inline-flex items-center justify-center gap-3 rounded-md border-2 border-accent-500 px-6 py-3 tag-mono text-xs sm:text-sm font-semibold uppercase tracking-widest text-accent-400 transition hover:bg-accent-500 hover:text-white w-full sm:w-auto">
+            <span></span>
+            <svg class="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+          <a href="#contact" id="hero-btn2"
+             class="inline-flex items-center justify-center gap-2 rounded-md border border-white/15 px-6 py-3 text-xs sm:text-sm font-semibold uppercase tracking-widest text-white/80 transition hover:bg-white/5 hover:text-white w-full sm:w-auto">
+            <span></span>
+          </a>
+        </div>
       </div>
-      <p class="mb-4 inline-block rounded-full border border-accent-500/30 bg-accent-500/10 px-4 py-1.5 text-xs font-medium tracking-wide text-accent-400 uppercase hidden" id="hero-location"></p>
-      <h1 class="text-3xl sm:text-5xl md:text-6xl font-bold text-white leading-tight tracking-tight" id="hero-name"></h1>
-      <p class="mt-2 sm:mt-3 text-sm sm:text-base md:text-lg font-medium text-accent-400" id="hero-role"></p>
-      <p id="hero-tagline" class="mt-4 sm:mt-6 text-base sm:text-lg md:text-xl text-slate-400 max-w-xl mx-auto leading-relaxed"></p>
-      <div class="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
-        <a href="#projects" id="hero-btn1"
-           class="inline-flex items-center justify-center gap-2 rounded-lg bg-accent-600 px-7 py-3 text-sm font-semibold text-white shadow-lg shadow-accent-600/25 transition hover:bg-accent-500 focus:outline-none focus:ring-2 focus:ring-accent-400 focus:ring-offset-2 focus:ring-offset-base-950 w-full sm:w-auto">
-          <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
-          <span></span>
-        </a>
-        <a href="#contact" id="hero-btn2"
-           class="inline-flex items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/5 px-7 py-3 text-sm font-semibold text-white transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-accent-400 focus:ring-offset-2 focus:ring-offset-base-950 w-full sm:w-auto">
-          <span></span>
-        </a>
+
+      <!-- Photo column -->
+      <div id="hero-photo-wrapper" class="relative mx-auto w-full min-w-0 max-w-[260px] sm:max-w-xs lg:max-w-md hidden">
+        <div class="absolute -top-8 -left-8 h-32 w-40 torn-shard bg-paper/95 rotate-[-6deg]"></div>
+        <div class="absolute top-10 -left-4 h-20 w-24 torn-shard-alt bg-accent-600/80 rotate-[10deg]"></div>
+        <div class="absolute -bottom-6 -right-6 h-28 w-32 torn-shard-alt bg-accent-500/60 rotate-[6deg]"></div>
+        <img id="hero-photo" src="" alt="" class="relative z-10 w-full aspect-[605/745] object-contain sticker-cutout" />
+        <div class="absolute z-20 -bottom-6 -left-2 sm:-left-8 w-[72%] max-w-[220px] rotate-[-3deg] rounded-sm bg-paper px-4 py-3 shadow-xl">
+          <p id="hero-note" class="tag-mono whitespace-pre-line text-[10px] sm:text-[11px] font-bold leading-snug text-base-950"></p>
+        </div>
       </div>
     </div>
   </header>
 
   <!-- ─── SNAPSHOT ─── -->
-  <section class="relative py-14 sm:py-24 fade-in">
-    <div class="mx-auto max-w-6xl px-4 sm:px-6">
-      <h2 class="text-2xl sm:text-3xl font-bold text-white text-center mb-10 sm:mb-16" id="snapshot-title"></h2>
+  <section class="relative py-14 sm:py-24 fade-in overflow-hidden">
+    <div class="pointer-events-none absolute -top-10 -left-16 h-40 w-64 torn-shard bg-accent-600/10"></div>
+    <div class="relative mx-auto max-w-6xl px-4 sm:px-6">
+      <div class="text-center mb-10 sm:mb-16">
+        <p class="tag-mono text-accent-400 text-xs tracking-widest mb-2">// 01</p>
+        <h2 class="font-display uppercase text-2xl leading-tight sm:text-4xl text-white" id="snapshot-title"></h2>
+      </div>
       <div class="grid gap-5 sm:gap-8 md:grid-cols-2">
-        <div class="rounded-2xl border border-white/5 bg-surface-800/60 p-5 sm:p-8">
-          <h3 class="text-xs font-semibold uppercase tracking-widest text-accent-400 mb-5 sm:mb-6" id="tech-title"></h3>
+        <div class="torn-card rounded-2xl border border-white/5 bg-surface-800/60 p-5 sm:p-8">
+          <h3 class="tag-mono text-xs font-semibold uppercase tracking-widest text-accent-400 mb-5 sm:mb-6" id="tech-title"></h3>
           <div id="skills-container" class="flex flex-wrap gap-2"></div>
         </div>
-        <div class="rounded-2xl border border-white/5 bg-surface-800/60 p-5 sm:p-8">
-          <h3 class="text-xs font-semibold uppercase tracking-widest text-accent-400 mb-5 sm:mb-6" id="lang-title"></h3>
+        <div class="torn-card rounded-2xl border border-white/5 bg-surface-800/60 p-5 sm:p-8">
+          <h3 class="tag-mono text-xs font-semibold uppercase tracking-widest text-accent-400 mb-5 sm:mb-6" id="lang-title"></h3>
           <div id="languages-container" class="space-y-4"></div>
         </div>
       </div>
@@ -379,34 +489,46 @@
   </section>
 
   <!-- ─── FEATURED PROJECTS ─── -->
-  <section id="projects" class="relative py-14 sm:py-24 fade-in">
-    <div class="mx-auto max-w-6xl px-4 sm:px-6">
-      <h2 class="text-2xl sm:text-3xl font-bold text-white text-center mb-3 sm:mb-4" id="projects-title"></h2>
+  <section id="projects" class="relative py-14 sm:py-24 fade-in overflow-hidden">
+    <div class="pointer-events-none absolute -bottom-10 -right-16 h-40 w-64 torn-shard-alt bg-accent-500/10"></div>
+    <div class="relative mx-auto max-w-6xl px-4 sm:px-6">
+      <div class="text-center mb-3 sm:mb-4">
+        <p class="tag-mono text-accent-400 text-xs tracking-widest mb-2">// 02</p>
+        <h2 class="font-display uppercase text-2xl leading-tight sm:text-4xl text-white" id="projects-title"></h2>
+      </div>
       <p class="text-center text-muted text-sm mb-10 sm:mb-16 max-w-lg mx-auto" id="projects-sub"></p>
       <div id="projects-container" class="grid gap-5 sm:gap-8 md:grid-cols-2"></div>
     </div>
   </section>
 
   <!-- ─── WORK HIGHLIGHTS ─── -->
-  <section class="relative py-14 sm:py-24 fade-in">
-    <div class="mx-auto max-w-6xl px-4 sm:px-6">
-      <h2 class="text-2xl sm:text-3xl font-bold text-white text-center mb-3 sm:mb-4" id="work-title"></h2>
+  <section class="relative py-14 sm:py-24 fade-in overflow-hidden">
+    <div class="pointer-events-none absolute -top-10 -left-16 h-40 w-64 torn-shard bg-accent-600/10"></div>
+    <div class="relative mx-auto max-w-6xl px-4 sm:px-6">
+      <div class="text-center mb-3 sm:mb-4">
+        <p class="tag-mono text-accent-400 text-xs tracking-widest mb-2">// 03</p>
+        <h2 class="font-display uppercase text-2xl leading-tight sm:text-4xl text-white" id="work-title"></h2>
+      </div>
       <p class="text-center text-muted text-sm mb-10 sm:mb-16 max-w-lg mx-auto" id="work-sub"></p>
       <div id="work-container" class="grid gap-5 sm:gap-8 md:grid-cols-2"></div>
     </div>
   </section>
 
   <!-- ─── EDUCATION & COMMUNITY ─── -->
-  <section class="relative py-14 sm:py-24 fade-in">
-    <div class="mx-auto max-w-6xl px-4 sm:px-6">
-      <h2 class="text-2xl sm:text-3xl font-bold text-white text-center mb-10 sm:mb-16" id="edu-title"></h2>
+  <section class="relative py-14 sm:py-24 fade-in overflow-hidden">
+    <div class="pointer-events-none absolute -bottom-10 -right-16 h-40 w-64 torn-shard-alt bg-accent-500/10"></div>
+    <div class="relative mx-auto max-w-6xl px-4 sm:px-6">
+      <div class="text-center mb-10 sm:mb-16">
+        <p class="tag-mono text-accent-400 text-xs tracking-widest mb-2">// 04</p>
+        <h2 class="font-display uppercase text-2xl leading-tight sm:text-4xl text-white" id="edu-title"></h2>
+      </div>
       <div class="grid gap-5 sm:gap-8 md:grid-cols-2">
-        <div class="rounded-2xl border border-white/5 bg-surface-800/60 p-5 sm:p-7">
-          <h3 class="text-xs font-semibold uppercase tracking-widest text-accent-400 mb-5 sm:mb-6" id="edu-label"></h3>
+        <div class="torn-card rounded-2xl border border-white/5 bg-surface-800/60 p-5 sm:p-7">
+          <h3 class="tag-mono text-xs font-semibold uppercase tracking-widest text-accent-400 mb-5 sm:mb-6" id="edu-label"></h3>
           <div id="education-container" class="space-y-5"></div>
         </div>
-        <div class="rounded-2xl border border-white/5 bg-surface-800/60 p-5 sm:p-7">
-          <h3 class="text-xs font-semibold uppercase tracking-widest text-accent-400 mb-5 sm:mb-6" id="community-label"></h3>
+        <div class="torn-card rounded-2xl border border-white/5 bg-surface-800/60 p-5 sm:p-7">
+          <h3 class="tag-mono text-xs font-semibold uppercase tracking-widest text-accent-400 mb-5 sm:mb-6" id="community-label"></h3>
           <div id="community-container" class="space-y-5"></div>
         </div>
       </div>
@@ -414,26 +536,34 @@
   </section>
 
   <!-- ─── LAB / ARCHIVED ─── -->
-  <section id="lab-section" class="relative py-14 sm:py-24 fade-in hidden">
-    <div class="mx-auto max-w-6xl px-4 sm:px-6">
-      <h2 class="text-2xl sm:text-3xl font-bold text-white text-center mb-3 sm:mb-4" id="lab-title"></h2>
+  <section id="lab-section" class="relative py-14 sm:py-24 fade-in hidden overflow-hidden">
+    <div class="pointer-events-none absolute -top-10 -left-16 h-40 w-64 torn-shard bg-accent-600/10"></div>
+    <div class="relative mx-auto max-w-6xl px-4 sm:px-6">
+      <div class="text-center mb-3 sm:mb-4">
+        <p class="tag-mono text-accent-400 text-xs tracking-widest mb-2">// 05</p>
+        <h2 class="font-display uppercase text-2xl leading-tight sm:text-4xl text-white" id="lab-title"></h2>
+      </div>
       <p class="text-center text-muted text-sm mb-10 sm:mb-16 max-w-lg mx-auto" id="lab-sub"></p>
       <div id="lab-container" class="grid gap-5 sm:gap-8 md:grid-cols-2 lg:grid-cols-3"></div>
     </div>
   </section>
 
   <!-- ─── ABOUT ─── -->
-  <section class="relative py-14 sm:py-24 fade-in">
-    <div class="mx-auto max-w-3xl px-4 sm:px-6 text-center">
-      <h2 class="text-2xl sm:text-3xl font-bold text-white mb-6 sm:mb-8" id="about-title"></h2>
+  <section class="relative py-14 sm:py-24 fade-in overflow-hidden">
+    <div class="pointer-events-none absolute -bottom-10 -right-16 h-40 w-64 torn-shard-alt bg-accent-500/10"></div>
+    <div class="relative mx-auto max-w-3xl px-4 sm:px-6 text-center">
+      <p class="tag-mono text-accent-400 text-xs tracking-widest mb-2">// 06</p>
+      <h2 class="font-display uppercase text-2xl leading-tight sm:text-4xl text-white mb-6 sm:mb-8" id="about-title"></h2>
       <div id="about-text" class="text-slate-400 leading-relaxed text-sm sm:text-base md:text-lg text-left"></div>
     </div>
   </section>
 
   <!-- ─── CONTACT ─── -->
-  <section id="contact" class="relative py-14 sm:py-24 fade-in">
-    <div class="mx-auto max-w-2xl px-4 sm:px-6 text-center">
-      <h2 class="text-2xl sm:text-3xl font-bold text-white mb-3 sm:mb-4" id="contact-title"></h2>
+  <section id="contact" class="relative py-14 sm:py-24 fade-in overflow-hidden">
+    <div class="pointer-events-none absolute -top-10 -left-16 h-40 w-64 torn-shard bg-accent-600/10"></div>
+    <div class="relative mx-auto max-w-2xl px-4 sm:px-6 text-center">
+      <p class="tag-mono text-accent-400 text-xs tracking-widest mb-2">// 07</p>
+      <h2 class="font-display uppercase text-2xl leading-tight sm:text-4xl text-white mb-3 sm:mb-4" id="contact-title"></h2>
       <p class="text-muted text-sm mb-8 sm:mb-12" id="contact-sub"></p>
       <div id="contact-links" class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4"></div>
     </div>
@@ -463,8 +593,20 @@
         return d.innerHTML;
       };
       const t = (key) => D.i18n[currentLang][key] || D.i18n.en[key] || "";
-      const badgeHTML = (text) =>
-        `<span class="badge inline-block rounded-full border border-accent-500/20 bg-accent-500/10 px-3 py-1 text-xs font-medium text-accent-400 cursor-default">${esc(text)}</span>`;
+      const TECH_ICONS = {
+        "Python": "python", "Django": "django", "FastAPI": "fastapi", "HTMX": "htmx",
+        "Celery": "celery", "PostgreSQL": "postgresql", "Redis": "redis", "pytest": "pytest",
+        "Docker": "docker", "GCP": "googlecloud", "LangChain": "langchain", "Go": "go",
+        "Claude Code": "claude", "MCP": "modelcontextprotocol",
+      };
+      const iconImg = (text) => {
+        const slug = TECH_ICONS[text];
+        return slug ? `<img src="https://cdn.simpleicons.org/${slug}" alt="" class="h-3.5 w-3.5 shrink-0" loading="lazy" />` : "";
+      };
+      const badgeHTML = (text) => {
+        const icon = iconImg(text);
+        return `<span class="badge inline-flex items-center gap-1.5 rounded-full border border-accent-500/20 bg-accent-500/10 px-3 py-1 text-xs font-medium text-accent-400 cursor-default">${icon}${esc(text)}</span>`;
+      };
       const statusColor = (s) => {
         const l = s.toLowerCase();
         if (l.includes("archived") || l.includes("archivado") || l.includes("arquivado")) return "text-slate-500 border-slate-600/30 bg-slate-600/10";
@@ -481,7 +623,9 @@
       $("nav-gh-m").href         = p.github;
       $("nav-li-m").href         = p.linkedin;
       $("nav-email-m").href      = "mailto:" + p.email;
-      $("hero-name").textContent = p.name;
+      const nameParts = p.name.trim().split(/\s+/);
+      $("hero-name-first").textContent = nameParts[0] || "";
+      $("hero-name-last").textContent  = nameParts.slice(1).join(" ");
       $("hero-role").textContent = p.role;
       if (p.location) {
         $("hero-location").textContent = p.location;
@@ -490,6 +634,10 @@
       $("footer-year").textContent   = new Date().getFullYear();
       $("footer-name").textContent   = p.name;
       $("skills-container").innerHTML = D.skills.map(badgeHTML).join("");
+      $("hero-pills").innerHTML = (D.heroPills || []).map((s) => {
+        const icon = iconImg(s) || `<span class="h-1.5 w-1.5 rounded-full bg-accent-500"></span>`;
+        return `<span class="tag-mono inline-flex items-center gap-2 text-xs sm:text-sm text-slate-300">${icon}${esc(s)}</span>`;
+      }).join("");
 
       if (p.photo) {
         $("hero-photo").src = p.photo;
@@ -502,6 +650,8 @@
         document.documentElement.lang = currentLang;
 
         /* Hero */
+        $("hero-tag").textContent = t("heroTag");
+        $("hero-note").textContent = t("heroNote");
         $("hero-tagline").textContent = t("tagline");
         $("hero-btn1").querySelector("span").textContent = t("heroBtn1");
         $("hero-btn2").querySelector("span").textContent = t("heroBtn2");
@@ -525,9 +675,11 @@
           const btns = [];
           if (proj.demoUrl) btns.push(`<a href="${esc(proj.demoUrl)}" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 rounded-lg bg-accent-600 px-4 py-2 text-xs font-semibold text-white transition hover:bg-accent-500" aria-label="Demo ${esc(proj.title)}">Demo</a>`);
           if (proj.repoUrl) btns.push(`<a href="${esc(proj.repoUrl)}" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold text-white transition hover:bg-white/10" aria-label="Repo ${esc(proj.title)}">Repo</a>`);
-          const img = proj.image ? `<img src="${esc(proj.image)}" alt="${esc(proj.title)}" class="w-full h-36 sm:h-44 object-cover rounded-xl mb-4 sm:mb-5" />` : "";
+          const img = proj.image
+            ? `<img src="${esc(proj.image)}" alt="${esc(proj.title)}" class="w-full h-56 sm:h-64 object-cover ${proj.imagePosition || "object-center"} rounded-xl mb-4 sm:mb-5" />`
+            : `<div class="w-full h-56 sm:h-64 rounded-xl mb-4 sm:mb-5 flex items-center justify-center dot-grid bg-gradient-to-br from-accent-600/15 via-surface-700 to-base-900 border border-accent-500/15"><span class="tag-mono text-3xl text-accent-400/60">&lt;/&gt;</span></div>`;
           return `
-          <article class="card-hover flex flex-col rounded-2xl border border-white/5 bg-surface-800/60 p-5 sm:p-7">
+          <article class="torn-card card-hover flex flex-col rounded-2xl border border-white/5 bg-surface-800/60 p-5 sm:p-7">
             ${img}
             <div class="flex items-start justify-between mb-4">
               <h3 class="text-lg font-semibold text-white">${esc(proj.title)}</h3>
@@ -550,7 +702,7 @@
         $("work-title").textContent = t("workTitle");
         $("work-sub").textContent   = t("workSub");
         $("work-container").innerHTML = D.workHighlights.map((w) => `
-          <article class="card-hover flex flex-col rounded-2xl border border-white/5 bg-surface-800/60 p-5 sm:p-7">
+          <article class="torn-card card-hover flex flex-col rounded-2xl border border-white/5 bg-surface-800/60 p-5 sm:p-7">
             <h3 class="text-base sm:text-lg font-semibold text-white mb-3 sm:mb-4">${esc(w.title)}</h3>
             <ul class="space-y-2 mb-6 text-sm text-slate-400 list-none">
               ${w.bullets.map((b) => `<li class="flex items-start gap-2"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent-500"></span><span>${esc(b)}</span></li>`).join("")}
@@ -592,7 +744,7 @@
           $("lab-container").innerHTML = D.labProjects.map((l) => {
             const repoBtn = l.repoUrl ? `<a href="${esc(l.repoUrl)}" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold text-white transition hover:bg-white/10 mt-4" aria-label="Repo ${esc(l.title)}">Repo</a>` : "";
             return `
-            <article class="card-hover flex flex-col rounded-2xl border border-white/5 bg-surface-800/60 p-7">
+            <article class="torn-card card-hover flex flex-col rounded-2xl border border-white/5 bg-surface-800/60 p-7">
               <div class="flex items-start justify-between mb-4">
                 <h3 class="text-lg font-semibold text-white">${esc(l.title)}</h3>
                 <span class="shrink-0 ml-3 rounded-full border px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${statusColor(l.status)}">${esc(l.status)}</span>
