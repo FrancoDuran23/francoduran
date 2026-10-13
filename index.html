@@ -1,831 +1,125 @@
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<!doctype html>
+<html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Franco Duran — Backend Developer · Python & Django</title>
-  <meta name="description" content="Franco Duran: Backend/Software Engineer specialized in Python, Django and production RAG systems. IT Project Director, AI trainer for educators." />
-  <meta name="theme-color" content="#0a0f1a" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            base:    { 950:'#050a14', 900:'#0a0f1a', 800:'#0f1629', 700:'#151d35' },
-            accent:  { 400:'#60a5fa', 500:'#3b82f6', 600:'#2563eb' },
-            surface: { 800:'#111827', 700:'#1a2236', 600:'#1e2a3f' },
-            paper:   '#eef1f6',
-            muted:   '#94a3b8',
-          },
-          fontFamily: {
-            sans: ['Inter','system-ui','sans-serif'],
-            display: ['"Archivo Black"','Inter','system-ui','sans-serif'],
-            mono: ['"JetBrains Mono"','ui-monospace','SFMono-Regular','monospace'],
-          },
-        }
-      }
-    }
-  </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Archivo+Black&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <style>
-    body { background: #050a14; }
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: #0a0f1a; }
-    ::-webkit-scrollbar-thumb { background: #1e2a3f; border-radius: 3px; }
-    .card-hover { transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
-    .card-hover:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(59,130,246,.12); border-color: #2563eb; }
-    .badge { font-family: 'JetBrains Mono', ui-monospace, monospace; transition: background .2s ease, color .2s ease; }
-    .badge:hover { background: #2563eb; color: #fff; }
-    .fade-in { opacity:0; transform:translateY(18px); transition: opacity .5s ease, transform .5s ease; }
-    .fade-in.visible { opacity:1; transform:translateY(0); }
-    .nav-link { position:relative; }
-    .nav-link::after { content:''; position:absolute; bottom:-2px; left:0; width:0; height:2px; background:#3b82f6; transition:width .25s ease; }
-    .nav-link:hover::after { width:100%; }
-    .lang-btn { transition: all .2s ease; }
-    .lang-btn.active { background: #2563eb; color: #fff; border-color: #2563eb; }
-    /* Mobile menu */
-    .mobile-menu { display:none; }
-    .mobile-menu.open { display:flex; }
-
-    /* ── Collage / torn-paper system ── */
-    .dot-grid {
-      background-image: radial-gradient(rgba(96,165,250,.35) 1px, transparent 1px);
-      background-size: 22px 22px;
-    }
-    .noise-overlay {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-      mix-blend-mode: overlay;
-    }
-    .tag-mono {
-      font-family: 'JetBrains Mono', ui-monospace, monospace;
-    }
-    /* Torn paper shard — decorative, behind headlines */
-    .torn-shard {
-      clip-path: polygon(4% 0%, 100% 8%, 96% 92%, 2% 100%, 8% 55%, 0% 48%);
-    }
-    .torn-shard-alt {
-      clip-path: polygon(0% 6%, 92% 0%, 100% 60%, 94% 100%, 40% 96%, 6% 88%);
-    }
-    /* Card torn corner accent (light touch, keeps text area clean) */
-    .torn-card { position: relative; overflow: hidden; }
-    .torn-card::after {
-      content: '';
-      position: absolute;
-      top: -14px; right: -14px;
-      width: 64px; height: 64px;
-      background: linear-gradient(135deg, rgba(96,165,250,.28), rgba(96,165,250,0) 70%);
-      clip-path: polygon(30% 0%, 100% 0%, 100% 70%, 70% 100%, 40% 85%, 20% 55%);
-      transform: rotate(-6deg);
-      pointer-events: none;
-    }
-    .tape {
-      position: absolute;
-      background: rgba(238,241,246,.9);
-      box-shadow: 0 2px 6px rgba(0,0,0,.25);
-    }
-    /* Die-cut sticker outline for the transparent hero cutout */
-    .sticker-cutout {
-      filter:
-        drop-shadow(3px 0 0 #eef1f6)
-        drop-shadow(-3px 0 0 #eef1f6)
-        drop-shadow(0 3px 0 #eef1f6)
-        drop-shadow(0 -3px 0 #eef1f6)
-        drop-shadow(2.4px 2.4px 0 #eef1f6)
-        drop-shadow(-2.4px 2.4px 0 #eef1f6)
-        drop-shadow(2.4px -2.4px 0 #eef1f6)
-        drop-shadow(-2.4px -2.4px 0 #eef1f6)
-        drop-shadow(0 18px 30px rgba(0,0,0,.5));
-    }
-  </style>
-
-  <!-- ══════════════════════════════════════════════
-       SITE_DATA — EDIT YOUR CONTENT HERE
-  ══════════════════════════════════════════════ -->
-  <script>
-    const SITE_DATA = {
-
-      profile: {
-        name:      "Franco Duran",
-        role:      "Software Engineer · Python & Django · AI",
-        location:  "",
-        email:     "francoduran232@gmail.com",
-        github:    "https://github.com/francoduran23",
-        linkedin:  "https://www.linkedin.com/in/francoduran23/",
-        phone:     "YOUR_PHONE",
-        showPhone: false,
-        photo:     "persona_recortada_original.png",
-      },
-
-      /* ── i18n ── */
-      i18n: {
-        en: {
-          tagline: "Python developer with 5+ years shipping production software: solid engineering, full test coverage (pytest, Playwright) and cloud deployment (AWS, GCP). Currently building banking software at Dinardi Projects and running TalentBase, an AI matchmaking SaaS live with real clients. Also IT Project Director & AI trainer for education professionals and government organizations.",
-          navProjects: "Projects",
-          heroTag: "backend developer",
-          heroNote: "SOLVING BACKEND PROBLEMS.\nBUILDING REAL IMPACT.",
-          heroBtn1: "View projects",
-          heroBtn2: "Contact me",
-          snapshotTitle: "Tech & Languages",
-          techTitle: "Tech Stack",
-          langTitle: "Languages",
-          projectsTitle: "Featured Projects",
-          projectsSub: "Personal projects and MVPs — what I can share publicly.",
-          problemLabel: "Problem",
-          solutionLabel: "Solution",
-          impactLabel: "Impact",
-          workTitle: "Professional Experience",
-          workSub: "Source code not public due to confidentiality; happy to discuss in interviews.",
-          eduTitle: "Education & Community",
-          eduLabel: "Education",
-          communityLabel: "Community Role",
-          labTitle: "Lab / Archived",
-          labSub: "Prototypes and experiments — what I learned matters more than the code.",
-          learnedLabel: "Learned",
-          aboutTitle: "About me",
-          aboutText: "Python developer with 5+ years building robust production software: object-oriented design, full test coverage (unit, integration, E2E with pytest and Playwright), CI/CD and cloud deployment (AWS, GCP). I've worked in consulting and public-sector environments shipping real deliverables, migrating legacy systems and designing for maintainability, including direct experience integrating credit bureaus, identity validation (KYC) and sensitive financial data.\n\nCurrently at Dinardi Projects building banking software — credit scoring, PDF data extraction, financial APIs — and running TalentBase, my own AI matchmaking SaaS live with real clients. Previously, at the Anti-Corruption Office of Jujuy Province I led a legacy migration to Django and built a production RAG system with LangChain over legal documentation, and at Lambda Solutions I migrated a C backend to Django and built fiber-optic network management systems.\n\nI also apply generative AI hands-on: RAG systems, LangChain, and AI coding tools (Claude Code, Harness Agents) in my daily workflow. As IT Project Director at a community training foundation in Jujuy, in collaboration with the Universidad Nacional de Jujuy, I coordinate AI training sessions for education professionals and government organizations.\n\nComfortable in remote, async and multicultural teams.",
-          contactTitle: "Contact",
-          contactSub: "Available for remote or hybrid opportunities.",
-          footerText: "Built with focus, coffee and a bit of AI.",
-          completed: "Completed",
-        },
-        es: {
-          tagline: "Desarrollador Python con más de 5 años construyendo software en producción: ingeniería sólida, cobertura de tests (pytest, Playwright) y despliegue en la nube (AWS, GCP). Actualmente desarrollo software bancario en Dinardi Projects y llevo adelante TalentBase, un SaaS de matchmaking con IA en producción con clientes reales. También soy Director de Proyectos IT y capacitador en IA para profesionales de la educación y organismos gubernamentales.",
-          navProjects: "Proyectos",
-          heroTag: "desarrollador backend",
-          heroNote: "RESOLVIENDO PROBLEMAS BACKEND.\nCONSTRUYENDO IMPACTO REAL.",
-          heroBtn1: "Ver proyectos",
-          heroBtn2: "Contactar",
-          snapshotTitle: "Tech & Idiomas",
-          techTitle: "Tech Stack",
-          langTitle: "Idiomas",
-          projectsTitle: "Proyectos Destacados",
-          projectsSub: "Proyectos personales y MVPs — lo que puedo mostrar públicamente.",
-          problemLabel: "Problema",
-          solutionLabel: "Solución",
-          impactLabel: "Impacto",
-          workTitle: "Experiencia Profesional",
-          workSub: "Código no público por confidencialidad; explicable en entrevista.",
-          eduTitle: "Formación & Comunidad",
-          eduLabel: "Educación",
-          communityLabel: "Rol en Comunidad",
-          labTitle: "Lab / Archivados",
-          labSub: "Prototipos y experimentos — lo que aprendí importa más que el código.",
-          learnedLabel: "Aprendizaje",
-          aboutTitle: "Sobre mí",
-          aboutText: "Desarrollador Python con más de 5 años construyendo software robusto en producción: diseño orientado a objetos, cobertura de tests completa (unitarios, integración, E2E con pytest y Playwright), CI/CD y despliegue en la nube (AWS, GCP). Trabajé en consultoría y organismos públicos con entregas reales, migración de sistemas legacy y arquitecturas orientadas a la mantenibilidad, incluyendo experiencia directa integrando bureaus crediticios, validación de identidad (KYC) y datos financieros sensibles.\n\nActualmente en Dinardi Projects desarrollo software bancario — scoring crediticio, extracción de datos de PDFs, APIs financieras — y llevo adelante TalentBase, mi propio SaaS de matchmaking con IA, en producción con clientes reales. Antes, en la Oficina Anticorrupción de la Provincia de Jujuy lideré una migración de sistema legacy a Django y construí un sistema RAG en producción con LangChain sobre normativa legal, y en Lambda Solutions migré un backend en C a Django y desarrollé sistemas de gestión de redes de fibra óptica.\n\nTambién aplico IA generativa de forma concreta: sistemas RAG, LangChain, y herramientas de IA (Claude Code, Harness Agents) en mi flujo de trabajo diario. Como Director de Proyectos IT en una fundación de capacitación comunitaria en Jujuy, en colaboración con la Universidad Nacional de Jujuy, coordino charlas y capacitaciones en IA para profesionales de la educación y organismos gubernamentales.\n\nCómodo en equipos remotos, async y multiculturales.",
-          contactTitle: "Contacto",
-          contactSub: "Disponible para oportunidades remotas o híbridas.",
-          footerText: "Hecho con foco, café y algo de IA.",
-          completed: "Completo",
-        },
-        pt: {
-          tagline: "Desenvolvedor Python com mais de 5 anos construindo software em produção: engenharia sólida, cobertura de testes (pytest, Playwright) e deploy em nuvem (AWS, GCP). Atualmente desenvolvendo software bancário na Dinardi Projects e liderando a TalentBase, um SaaS de matchmaking com IA em produção com clientes reais. Também sou Diretor de Projetos de TI e instrutor de IA para profissionais da educação e organizações governamentais.",
-          navProjects: "Projetos",
-          heroTag: "desenvolvedor backend",
-          heroNote: "RESOLVENDO PROBLEMAS DE BACKEND.\nCONSTRUINDO IMPACTO REAL.",
-          heroBtn1: "Ver projetos",
-          heroBtn2: "Contato",
-          snapshotTitle: "Tech & Idiomas",
-          techTitle: "Tech Stack",
-          langTitle: "Idiomas",
-          projectsTitle: "Projetos em Destaque",
-          projectsSub: "Projetos pessoais e MVPs — o que posso mostrar publicamente.",
-          problemLabel: "Problema",
-          solutionLabel: "Solução",
-          impactLabel: "Impacto",
-          workTitle: "Experiência Profissional",
-          workSub: "Código não público por confidencialidade; posso explicar em entrevista.",
-          eduTitle: "Formação & Comunidade",
-          eduLabel: "Educação",
-          communityLabel: "Papel na Comunidade",
-          labTitle: "Lab / Arquivados",
-          labSub: "Protótipos e experimentos — o que aprendi importa mais que o código.",
-          learnedLabel: "Aprendizado",
-          aboutTitle: "Sobre mim",
-          aboutText: "Desenvolvedor Python com mais de 5 anos construindo software robusto em produção: design orientado a objetos, cobertura de testes completa (unitários, integração, E2E com pytest e Playwright), CI/CD e deploy em nuvem (AWS, GCP). Trabalhei em consultoria e organismos públicos com entregas reais, migração de sistemas legados e arquiteturas orientadas à manutenibilidade, incluindo experiência direta integrando bureaus de crédito, validação de identidade (KYC) e dados financeiros sensíveis.\n\nAtualmente na Dinardi Projects desenvolvo software bancário — scoring de crédito, extração de dados de PDFs, APIs financeiras — e lidero a TalentBase, meu próprio SaaS de matchmaking com IA, em produção com clientes reais. Antes, na Oficina Anticorrupción da Província de Jujuy liderei uma migração de sistema legado para Django e construí um sistema RAG em produção com LangChain sobre normativa legal, e na Lambda Solutions migrei um backend em C para Django e desenvolvi sistemas de gestão de redes de fibra óptica.\n\nTambém aplico IA generativa de forma concreta: sistemas RAG, LangChain, e ferramentas de IA (Claude Code, Harness Agents) no meu fluxo de trabalho diário. Como Diretor de Projetos de TI em uma fundação de capacitação comunitária em Jujuy, em colaboração com a Universidad Nacional de Jujuy, coordeno palestras e capacitações em IA para profissionais da educação e organizações governamentais.\n\nConfortável em equipes remotas, assíncronas e multiculturais.",
-          contactTitle: "Contato",
-          contactSub: "Disponível para oportunidades remotas ou híbridas.",
-          footerText: "Feito com foco, café e um pouco de IA.",
-          completed: "Concluído",
-        },
-      },
-
-      languages: [
-        { label: "Spanish",    level: { en:"Native", es:"Nativo", pt:"Nativo" } },
-        { label: "Portuguese", level: { en:"Intermediate", es:"Intermedio", pt:"Intermediário" } },
-        { label: "English",    level: { en:"Intermediate (B1)", es:"Intermedio (B1)", pt:"Intermediário (B1)" } },
-      ],
-
-      skills: [
-        "Python","Django","FastAPI","HTMX","Celery",
-        "PostgreSQL","Redis","pytest","Playwright",
-        "Docker","AWS","GCP","LangChain","pgvector",
-        "MCP","Claude Code","Go",
-      ],
-
-      heroPills: ["Python","Django","PostgreSQL","Redis","Docker","pytest"],
-
-      featuredProjects: [
-        {
-          title:    "TalentBase",
-          image:    "talentbase.jpg",
-          imagePosition: "object-top",
-          oneLiner: "AI-powered talent matchmaking SaaS — live with real clients",
-          problem:  "Recruiters struggle to match candidates to job openings efficiently with plain keyword search",
-          solution: "End-to-end SaaS matching candidates to vacancies with LLMs and Voyage AI embeddings, semantic scoring over pgvector and LLM-based ranking for match explainability",
-          impact:   "Multi-tenant Django backend live in production, giving recruiters automated, explainable candidate-fit reports",
-          stack:    ["Django","PostgreSQL","pgvector","LangChain","Voyage AI"],
-          demoUrl:  "",
-          repoUrl:  "",
-          status:   "Live",
-        },
-        {
-          title:    "Mission Match",
-          image:    "hackaton.jpg",
-          imagePosition: "object-[center_42%]",
-          oneLiner: "AI-powered volunteer matching for parishes — 1st place, Acutis Summit hackathon",
-          problem:  "Parish ministries struggle to match volunteers to the roles that best fit their skills, interests and availability",
-          solution: "An AI matching engine connecting volunteers to ministry roles using semantic search over skills and interests, following the same approach as TalentBase",
-          impact:   "Built end-to-end during the Acutis Summit hackathon (Expo Católica) — won 1st place as champion team",
-          stack:    ["Python","Django","PostgreSQL","pgvector","LangChain"],
-          demoUrl:  "",
-          repoUrl:  "",
-          status:   "Hackathon Winner",
-        },
-        {
-          title:    "CIDEJ",
-          image:    "cidej.png",
-          oneLiner: "Website for a community training foundation in Jujuy",
-          problem:  "The foundation lacked an online presence to communicate its mission and programs",
-          solution: "Built a website to showcase the foundation's projects, AI training sessions and community initiatives",
-          impact:   "Gives visibility to the foundation and facilitates outreach to education professionals and government organizations",
-          stack:    ["TypeScript","PostgreSQL","Docker"],
-          demoUrl:  "https://www.cidej23.org",
-          repoUrl:  "",
-          status:   "Live",
-        },
-        {
-          title:    "EmpathIA",
-          image:    "emphatia.png",
-          oneLiner: "AI-powered app that transforms aggressive messages into empathetic communication",
-          problem:  "Misinterpreted messages ruin important conversations — between separated parents, family members, couples and friends",
-          solution: "Therapeutic AI that rewrites messages in real time using specialized prompt engineering and a custom knowledge base of therapeutic patterns, with anonymous and temporary chat for maximum privacy",
-          impact:   "Combines psychology with technology to solve real interpersonal communication problems, applicable to couples, separated parents, families and friendships",
-          stack:    ["Django","WebSockets","OpenAI","Railway"],
-          demoUrl:  "https://emphatia.up.railway.app",
-          repoUrl:  "",
-          status:   "MVP",
-        },
-        {
-          title:    "Vigo Inmobiliaria",
-          image:    "inmo.png",
-          oneLiner: "Real estate platform for buying and selling properties",
-          problem:  "Real estate agencies need a modern online presence to showcase listings and connect with buyers",
-          solution: "Built a full web platform with property listings, search and contact features powered by Firebase",
-          impact:   "Provides a streamlined experience for buyers and sellers, digitalizing the real estate process",
-          stack:    ["Firebase","Google Cloud"],
-          demoUrl:  "https://vigoinmobiliaria.com",
-          repoUrl:  "",
-          status:   "Live",
-        },
-      ],
-
-      workHighlights: [
-        {
-          title:   "Dinardi Projects — Banking Software (2025–Present)",
-          bullets: [
-            "Built PDF parsers for automatic financial data extraction (corporate structure, debt, management bodies), with unit and integration test coverage on real cases",
-            "Implemented an end-to-end credit scoring system with a state machine, integrating external bureaus (Nosis WS01) and financial APIs (SIDEBA)",
-            "Automated credit report generation (PDF via WeasyPrint) with financial ratio calculations and projected cash flow",
-            "Designed a roles and permissions architecture with 6 differentiated roles and complex approval workflows",
-            "Heavy daily use of Claude Code and Harness Agents for code generation, review and refactoring, without sacrificing test coverage",
-          ],
-          stack: ["Python 3.12","Django 5.2","HTMX","PostgreSQL","pytest","Playwright"],
-        },
-        {
-          title:   "Anti-Corruption Office — Jujuy Province (2021–2025)",
-          bullets: [
-            "Led the modernization of a legacy C#/ASP.NET system to Python/Django: reverse engineering, architecture redesign and incremental delivery with per-module tests",
-            "Designed and implemented a full MVT system for financial disclosure statements, with sensitive-data handling, role-based access control and thorough validation",
-            "Built a production RAG system with LangChain for legal/regulatory queries, retrieving over a custom document base indexed with pgvector and Voyage AI embeddings",
-            "Automated legal document analysis with LLMs, reducing the team's repetitive manual work",
-            "Cut asset-disclosure report generation time by 40% with custom processing algorithms",
-          ],
-          stack: ["Python","Django","PostgreSQL","LangChain","pgvector"],
-        },
-        {
-          title:   "Lambda Solutions — Backend & Fiber Optic Systems (2022–2025)",
-          bullets: [
-            "Led the migration of a C backend to Django + Redis: legacy code analysis, reverse engineering and full architecture redesign",
-            "Developed Python scripts for correction, transformation and maintenance of production databases",
-            "Coordinated deployments on Google App Engine and Linux VMs, establishing repeatable delivery flows",
-            "Contributed to a fiber-optic network management app for telecom clients under short delivery cycles",
-            "Implemented MCP (Model Context Protocol) servers to expose internal tools to AI assistants and automate team operations",
-          ],
-          stack: ["Python","Go","Django","PostgreSQL","Redis","MCP"],
-        },
-      ],
-
-      labProjects: [],
-
-      education: [
-        {
-          degree:      "BSc in Information Technology",
-          institution: "Universidad de Palermo",
-          status:      "completed",
-        },
-        {
-          degree:      "Analyst Programmer",
-          institution: "Universidad Nacional de Jujuy (UNJu)",
-          status:      "completed",
-        },
-      ],
-
-      communityRoles: [
-        {
-          role:         "IT Project Director",
-          organization: "CIDEJ — Jujuy (in collaboration with UNJu)",
-          description: {
-            en: "I lead IT projects and coordinate AI training sessions and workshops for education professionals and government organizations, helping them integrate artificial intelligence tools into their daily workflows, automate processes and improve decision-making. I also participate in initiatives applying AI and technology to topics of social interest such as childhood and adolescence perspectives in the NOA region.",
-            es: "Dirijo proyectos tecnológicos y coordino charlas y capacitaciones sobre inteligencia artificial tanto para profesionales de la educación como para organismos gubernamentales, facilitando la integración de herramientas de IA en sus flujos de trabajo, la automatización de procesos y la mejora en la toma de decisiones. También participo en iniciativas que aplican IA y tecnologías a temas de interés social como la perspectiva de infancias y adolescencias en el NOA.",
-            pt: "Lidero projetos de TI e coordeno capacitações sobre inteligência artificial tanto para profissionais da educação quanto para organizações governamentais, facilitando a integração de ferramentas de IA em seus fluxos de trabalho, a automatização de processos e a melhoria na tomada de decisões. Também participo de iniciativas que aplicam IA e tecnologias a temas de interesse social como a perspectiva de infâncias e adolescências na região do NOA.",
-          },
-        },
-      ],
-    };
-  </script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Franco Durán · IA, bancos y comunidad en Jujuy</title>
+<meta name="description" content="Franco Durán: automatización de procesos con IA en bancos comerciales, consultor de IA, cofundador de jujuy.dev, creador de Cole Juy, organizador de hackathons y embajador de Monad, Solana y Stellar.">
+<meta property="og:title" content="Franco Durán">
+<meta property="og:description" content="IA en bancos, consultor de IA, cofundador de jujuy.dev y creador de Cole Juy.">
+<meta property="og:image" content="https://francoduran23.github.io/francoduran/assets/franco.jpg">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f3f0e8" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#171714" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%231c1b18'/><path d='M9 23V9h12v3.2h-8.4v2.6h7v3.1h-7V23z' fill='%23f3f0e8'/><circle cx='24' cy='24' r='3' fill='%23ef7d4f'/></svg>">
+<link rel="preload" href="fonts/barlow-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="styles.css">
 </head>
+<body>
 
-<body class="font-sans text-slate-300 antialiased">
-
-  <!-- ─── NAVBAR ─── -->
-  <nav id="navbar" class="fixed top-0 inset-x-0 z-50 border-b border-white/5 bg-base-950/80 backdrop-blur-md">
-    <div class="mx-auto flex max-w-6xl items-center justify-between px-4 sm:px-6 py-3 sm:py-4">
-      <a href="#" class="font-display text-sm sm:text-base uppercase text-white tracking-tight" id="nav-name"></a>
-      <!-- Desktop nav -->
-      <div class="hidden sm:flex items-center gap-4">
-        <div class="flex items-center gap-1 mr-2" id="lang-switcher">
-          <button data-lang="en" class="lang-btn text-[11px] font-semibold px-2.5 py-1 rounded-md border border-white/10 text-slate-400 hover:text-white active" aria-label="English">EN</button>
-          <button data-lang="es" class="lang-btn text-[11px] font-semibold px-2.5 py-1 rounded-md border border-white/10 text-slate-400 hover:text-white" aria-label="Español">ES</button>
-          <button data-lang="pt" class="lang-btn text-[11px] font-semibold px-2.5 py-1 rounded-md border border-white/10 text-slate-400 hover:text-white" aria-label="Português">PT</button>
-        </div>
-        <a id="nav-gh" href="#" target="_blank" rel="noopener" aria-label="GitHub"
-           class="nav-link text-muted hover:text-white text-sm transition-colors">GitHub</a>
-        <a id="nav-li" href="#" target="_blank" rel="noopener" aria-label="LinkedIn"
-           class="nav-link text-muted hover:text-white text-sm transition-colors">LinkedIn</a>
-        <a id="nav-email" href="#" aria-label="Email"
-           class="nav-link text-muted hover:text-white text-sm transition-colors">Email</a>
-      </div>
-      <!-- Mobile: only hamburger -->
-      <button id="mobile-menu-btn" class="flex sm:hidden items-center justify-center text-slate-400 hover:text-white transition-colors p-1.5 rounded-lg hover:bg-white/5" aria-label="Menu">
-        <svg id="menu-icon-open" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
-        <svg id="menu-icon-close" class="h-5 w-5 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
-      </button>
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#inicio" aria-label="Franco Durán">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="currentColor"/><path d="M9 23V9h12v3.2h-8.4v2.6h7v3.1h-7V23z" fill="var(--ground)"/><circle cx="24" cy="24" r="3" fill="var(--mark)"/></svg>
+      <span>Franco Durán</span>
+    </a>
+    <nav class="nav" aria-label="Secciones">
+      <a href="#hago" data-t="nav.do">Lo que hago</a>
+      <a href="#proyectos" data-t="nav.projects">Proyectos</a>
+      <a href="#ecosistema" data-t="nav.eco">Ecosistema</a>
+      <a href="#experiencia" data-t="nav.work">Experiencia</a>
+      <a href="#contacto" data-t="nav.contact">Contacto</a>
+    </nav>
+    <div class="seg" role="group" aria-label="Idioma">
+      <button data-lang="es" aria-pressed="true">ES</button>
+      <button data-lang="en" aria-pressed="false">EN</button>
     </div>
-    <!-- Mobile dropdown -->
-    <div id="mobile-menu" class="mobile-menu sm:!hidden flex-col border-t border-white/5 bg-base-950/95 backdrop-blur-md">
-      <div class="px-5 py-4 space-y-3">
-        <a id="nav-gh-m" href="#" target="_blank" rel="noopener" class="flex items-center gap-3 text-slate-300 hover:text-white text-sm py-2 transition-colors">
-          <svg class="h-4 w-4 text-accent-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.167 6.839 9.49.5.09.682-.218.682-.483 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.607.069-.607 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.091-.647.35-1.087.636-1.337-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844a9.59 9.59 0 012.504.337c1.909-1.294 2.748-1.025 2.748-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
-          GitHub
-        </a>
-        <a id="nav-li-m" href="#" target="_blank" rel="noopener" class="flex items-center gap-3 text-slate-300 hover:text-white text-sm py-2 transition-colors">
-          <svg class="h-4 w-4 text-accent-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM4 6a2 2 0 100-4 2 2 0 000 4z"/></svg>
-          LinkedIn
-        </a>
-        <a id="nav-email-m" href="#" class="flex items-center gap-3 text-slate-300 hover:text-white text-sm py-2 transition-colors">
-          <svg class="h-4 w-4 text-accent-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-          Email
-        </a>
-      </div>
-      <div class="px-5 py-3 border-t border-white/5">
-        <div class="flex items-center gap-1.5" id="lang-switcher-mobile">
-          <button data-lang="en" class="lang-btn text-[11px] font-semibold px-3 py-1.5 rounded-md border border-white/10 text-slate-400 hover:text-white active" aria-label="English">EN</button>
-          <button data-lang="es" class="lang-btn text-[11px] font-semibold px-3 py-1.5 rounded-md border border-white/10 text-slate-400 hover:text-white" aria-label="Español">ES</button>
-          <button data-lang="pt" class="lang-btn text-[11px] font-semibold px-3 py-1.5 rounded-md border border-white/10 text-slate-400 hover:text-white" aria-label="Português">PT</button>
-        </div>
-      </div>
-    </div>
-  </nav>
+  </div>
+</header>
 
-  <!-- ─── HERO ─── -->
-  <header class="relative min-h-screen flex items-center overflow-hidden pt-28 pb-16 sm:pt-24">
-    <div class="pointer-events-none absolute -top-40 -left-40 h-[500px] w-[500px] rounded-full bg-accent-600/10 blur-[120px]"></div>
-    <div class="pointer-events-none absolute -bottom-40 -right-40 h-[400px] w-[400px] rounded-full bg-accent-500/8 blur-[100px]"></div>
-    <div class="pointer-events-none absolute top-20 left-0 h-56 w-56 dot-grid opacity-40 hidden sm:block"></div>
-    <pre class="pointer-events-none absolute top-24 right-6 hidden xl:block tag-mono text-[11px] leading-5 text-accent-400/25 select-none">from django.db import models
-
-class Project(models.Model):
-    name = models.CharField(max_length=120)
-    description = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.name</pre>
-
-    <div class="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 grid gap-14 lg:grid-cols-[1.1fr_0.9fr] items-center">
-      <!-- Text column -->
-      <div class="text-left min-w-0 order-2 lg:order-1">
-        <p class="tag-mono mb-4 inline-flex items-center gap-2 text-xs sm:text-sm text-accent-400 uppercase tracking-widest">
-          <span>&gt;</span><span id="hero-tag"></span><span class="text-white/40">_</span>
-        </p>
-        <h1 class="font-display uppercase leading-[0.92] tracking-tight text-white text-5xl sm:text-6xl md:text-7xl">
-          <span id="hero-name-first" class="block"></span><span id="hero-name-last" class="block text-accent-500"></span>
-        </h1>
-        <p class="mt-4 tag-mono text-xs text-slate-500 uppercase tracking-widest hidden" id="hero-location"></p>
-        <p id="hero-role" class="mt-5 text-sm sm:text-base font-semibold text-white/90"></p>
-        <p id="hero-tagline" class="mt-4 text-sm sm:text-base text-slate-400 max-w-xl leading-relaxed"></p>
-
-        <div id="hero-pills" class="mt-7 flex flex-wrap gap-x-6 gap-y-3"></div>
-
-        <div class="mt-9 flex flex-col sm:flex-row items-start gap-3 sm:gap-4">
-          <a href="#projects" id="hero-btn1"
-             class="group inline-flex items-center justify-center gap-3 rounded-md border-2 border-accent-500 px-6 py-3 tag-mono text-xs sm:text-sm font-semibold uppercase tracking-widest text-accent-400 transition hover:bg-accent-500 hover:text-white w-full sm:w-auto">
-            <span></span>
-            <svg class="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-          </a>
-          <a href="#contact" id="hero-btn2"
-             class="inline-flex items-center justify-center gap-2 rounded-md border border-white/15 px-6 py-3 text-xs sm:text-sm font-semibold uppercase tracking-widest text-white/80 transition hover:bg-white/5 hover:text-white w-full sm:w-auto">
-            <span></span>
-          </a>
-        </div>
-      </div>
-
-      <!-- Photo column -->
-      <div id="hero-photo-wrapper" class="relative mx-auto w-full min-w-0 max-w-[260px] sm:max-w-xs lg:max-w-md hidden order-1 lg:order-2">
-        <div class="absolute -top-8 -left-8 h-32 w-40 torn-shard bg-paper/95 rotate-[-6deg]"></div>
-        <div class="absolute top-10 -left-4 h-20 w-24 torn-shard-alt bg-accent-600/80 rotate-[10deg]"></div>
-        <div class="absolute -bottom-6 -right-6 h-28 w-32 torn-shard-alt bg-accent-500/60 rotate-[6deg]"></div>
-        <img id="hero-photo" src="" alt="" class="relative z-10 w-full aspect-[605/745] object-contain sticker-cutout" />
-        <div class="absolute z-20 -bottom-6 -left-2 sm:-left-8 w-[72%] max-w-[220px] rotate-[-3deg] rounded-sm bg-paper px-4 py-3 shadow-xl">
-          <p id="hero-note" class="tag-mono whitespace-pre-line text-[10px] sm:text-[11px] font-bold leading-snug text-base-950"></p>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <!-- ─── SNAPSHOT ─── -->
-  <section class="relative py-14 sm:py-24 fade-in overflow-hidden">
-    <div class="pointer-events-none absolute -top-10 -left-16 h-40 w-64 torn-shard bg-accent-600/10"></div>
-    <div class="relative mx-auto max-w-6xl px-4 sm:px-6">
-      <div class="text-center mb-10 sm:mb-16">
-        <p class="tag-mono text-accent-400 text-xs tracking-widest mb-2">// 01</p>
-        <h2 class="font-display uppercase text-2xl leading-tight sm:text-4xl text-white" id="snapshot-title"></h2>
-      </div>
-      <div class="grid gap-5 sm:gap-8 md:grid-cols-2">
-        <div class="torn-card rounded-2xl border border-white/5 bg-surface-800/60 p-5 sm:p-8">
-          <h3 class="tag-mono text-xs font-semibold uppercase tracking-widest text-accent-400 mb-5 sm:mb-6" id="tech-title"></h3>
-          <div id="skills-container" class="flex flex-wrap gap-2"></div>
-        </div>
-        <div class="torn-card rounded-2xl border border-white/5 bg-surface-800/60 p-5 sm:p-8">
-          <h3 class="tag-mono text-xs font-semibold uppercase tracking-widest text-accent-400 mb-5 sm:mb-6" id="lang-title"></h3>
-          <div id="languages-container" class="space-y-4"></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── FEATURED PROJECTS ─── -->
-  <section id="projects" class="relative py-14 sm:py-24 fade-in overflow-hidden">
-    <div class="pointer-events-none absolute -bottom-10 -right-16 h-40 w-64 torn-shard-alt bg-accent-500/10"></div>
-    <div class="relative mx-auto max-w-6xl px-4 sm:px-6">
-      <div class="text-center mb-3 sm:mb-4">
-        <p class="tag-mono text-accent-400 text-xs tracking-widest mb-2">// 02</p>
-        <h2 class="font-display uppercase text-2xl leading-tight sm:text-4xl text-white" id="projects-title"></h2>
-      </div>
-      <p class="text-center text-muted text-sm mb-10 sm:mb-16 max-w-lg mx-auto" id="projects-sub"></p>
-      <div id="projects-container" class="grid gap-5 sm:gap-8 md:grid-cols-2"></div>
-    </div>
-  </section>
-
-  <!-- ─── WORK HIGHLIGHTS ─── -->
-  <section class="relative py-14 sm:py-24 fade-in overflow-hidden">
-    <div class="pointer-events-none absolute -top-10 -left-16 h-40 w-64 torn-shard bg-accent-600/10"></div>
-    <div class="relative mx-auto max-w-6xl px-4 sm:px-6">
-      <div class="text-center mb-3 sm:mb-4">
-        <p class="tag-mono text-accent-400 text-xs tracking-widest mb-2">// 03</p>
-        <h2 class="font-display uppercase text-2xl leading-tight sm:text-4xl text-white" id="work-title"></h2>
-      </div>
-      <p class="text-center text-muted text-sm mb-10 sm:mb-16 max-w-lg mx-auto" id="work-sub"></p>
-      <div id="work-container" class="grid gap-5 sm:gap-8 md:grid-cols-2"></div>
-    </div>
-  </section>
-
-  <!-- ─── EDUCATION & COMMUNITY ─── -->
-  <section class="relative py-14 sm:py-24 fade-in overflow-hidden">
-    <div class="pointer-events-none absolute -bottom-10 -right-16 h-40 w-64 torn-shard-alt bg-accent-500/10"></div>
-    <div class="relative mx-auto max-w-6xl px-4 sm:px-6">
-      <div class="text-center mb-10 sm:mb-16">
-        <p class="tag-mono text-accent-400 text-xs tracking-widest mb-2">// 04</p>
-        <h2 class="font-display uppercase text-2xl leading-tight sm:text-4xl text-white" id="edu-title"></h2>
-      </div>
-      <div class="grid gap-5 sm:gap-8 md:grid-cols-2">
-        <div class="torn-card rounded-2xl border border-white/5 bg-surface-800/60 p-5 sm:p-7">
-          <h3 class="tag-mono text-xs font-semibold uppercase tracking-widest text-accent-400 mb-5 sm:mb-6" id="edu-label"></h3>
-          <div id="education-container" class="space-y-5"></div>
-        </div>
-        <div class="torn-card rounded-2xl border border-white/5 bg-surface-800/60 p-5 sm:p-7">
-          <h3 class="tag-mono text-xs font-semibold uppercase tracking-widest text-accent-400 mb-5 sm:mb-6" id="community-label"></h3>
-          <div id="community-container" class="space-y-5"></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── LAB / ARCHIVED ─── -->
-  <section id="lab-section" class="relative py-14 sm:py-24 fade-in hidden overflow-hidden">
-    <div class="pointer-events-none absolute -top-10 -left-16 h-40 w-64 torn-shard bg-accent-600/10"></div>
-    <div class="relative mx-auto max-w-6xl px-4 sm:px-6">
-      <div class="text-center mb-3 sm:mb-4">
-        <p class="tag-mono text-accent-400 text-xs tracking-widest mb-2">// 05</p>
-        <h2 class="font-display uppercase text-2xl leading-tight sm:text-4xl text-white" id="lab-title"></h2>
-      </div>
-      <p class="text-center text-muted text-sm mb-10 sm:mb-16 max-w-lg mx-auto" id="lab-sub"></p>
-      <div id="lab-container" class="grid gap-5 sm:gap-8 md:grid-cols-2 lg:grid-cols-3"></div>
-    </div>
-  </section>
-
-  <!-- ─── ABOUT ─── -->
-  <section class="relative py-14 sm:py-24 fade-in overflow-hidden">
-    <div class="pointer-events-none absolute -bottom-10 -right-16 h-40 w-64 torn-shard-alt bg-accent-500/10"></div>
-    <div class="relative mx-auto max-w-3xl px-4 sm:px-6 text-center">
-      <p class="tag-mono text-accent-400 text-xs tracking-widest mb-2">// 06</p>
-      <h2 class="font-display uppercase text-2xl leading-tight sm:text-4xl text-white mb-6 sm:mb-8" id="about-title"></h2>
-      <div id="about-text" class="text-slate-400 leading-relaxed text-sm sm:text-base md:text-lg text-left"></div>
-    </div>
-  </section>
-
-  <!-- ─── CONTACT ─── -->
-  <section id="contact" class="relative py-14 sm:py-24 fade-in overflow-hidden">
-    <div class="pointer-events-none absolute -top-10 -left-16 h-40 w-64 torn-shard bg-accent-600/10"></div>
-    <div class="relative mx-auto max-w-2xl px-4 sm:px-6 text-center">
-      <p class="tag-mono text-accent-400 text-xs tracking-widest mb-2">// 07</p>
-      <h2 class="font-display uppercase text-2xl leading-tight sm:text-4xl text-white mb-3 sm:mb-4" id="contact-title"></h2>
-      <p class="text-muted text-sm mb-8 sm:mb-12" id="contact-sub"></p>
-      <div id="contact-links" class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4"></div>
-    </div>
-  </section>
-
-  <!-- ─── FOOTER ─── -->
-  <footer class="border-t border-white/5 py-6 sm:py-8">
-    <div class="mx-auto max-w-6xl px-4 sm:px-6 text-center text-xs text-slate-500">
-      &copy; <span id="footer-year"></span> <span id="footer-name"></span>. <span id="footer-text"></span>
-    </div>
-  </footer>
-
-  <!-- ══════════════════════════════════════════════
-       RENDER LOGIC
-  ══════════════════════════════════════════════ -->
-  <script>
-    (function () {
-      const D = SITE_DATA;
-      const p = D.profile;
-      let currentLang = "en";
-
-      /* ── Helpers ── */
-      const $ = (id) => document.getElementById(id);
-      const esc = (s) => {
-        const d = document.createElement("div");
-        d.textContent = s;
-        return d.innerHTML;
-      };
-      const t = (key) => D.i18n[currentLang][key] || D.i18n.en[key] || "";
-      const TECH_ICONS = {
-        "Python": "python", "Django": "django", "FastAPI": "fastapi", "HTMX": "htmx",
-        "Celery": "celery", "PostgreSQL": "postgresql", "Redis": "redis", "pytest": "pytest",
-        "Docker": "docker", "GCP": "googlecloud", "LangChain": "langchain", "Go": "go",
-        "Claude Code": "claude", "MCP": "modelcontextprotocol",
-      };
-      const iconImg = (text) => {
-        const slug = TECH_ICONS[text];
-        return slug ? `<img src="https://cdn.simpleicons.org/${slug}" alt="" class="h-3.5 w-3.5 shrink-0" loading="lazy" />` : "";
-      };
-      const badgeHTML = (text) => {
-        const icon = iconImg(text);
-        return `<span class="badge inline-flex items-center gap-1.5 rounded-full border border-accent-500/20 bg-accent-500/10 px-3 py-1 text-xs font-medium text-accent-400 cursor-default">${icon}${esc(text)}</span>`;
-      };
-      const statusColor = (s) => {
-        const l = s.toLowerCase();
-        if (l.includes("archived") || l.includes("archivado") || l.includes("arquivado")) return "text-slate-500 border-slate-600/30 bg-slate-600/10";
-        if (l.includes("wip") || l.includes("progress") || l.includes("desarrollo") || l.includes("andamento")) return "text-amber-400 border-amber-500/30 bg-amber-500/10";
-        return "text-emerald-400 border-emerald-500/30 bg-emerald-500/10";
-      };
-
-      /* ── Static (run once) ── */
-      $("nav-name").textContent  = p.name;
-      $("nav-gh").href           = p.github;
-      $("nav-li").href           = p.linkedin;
-      $("nav-email").href        = "mailto:" + p.email;
-      /* Mobile nav links */
-      $("nav-gh-m").href         = p.github;
-      $("nav-li-m").href         = p.linkedin;
-      $("nav-email-m").href      = "mailto:" + p.email;
-      const nameParts = p.name.trim().split(/\s+/);
-      $("hero-name-first").textContent = nameParts[0] || "";
-      $("hero-name-last").textContent  = nameParts.slice(1).join(" ");
-      $("hero-role").textContent = p.role;
-      if (p.location) {
-        $("hero-location").textContent = p.location;
-        $("hero-location").classList.remove("hidden");
-      }
-      $("footer-year").textContent   = new Date().getFullYear();
-      $("footer-name").textContent   = p.name;
-      $("skills-container").innerHTML = D.skills.map(badgeHTML).join("");
-      $("hero-pills").innerHTML = (D.heroPills || []).map((s) => {
-        const icon = iconImg(s) || `<span class="h-1.5 w-1.5 rounded-full bg-accent-500"></span>`;
-        return `<span class="tag-mono inline-flex items-center gap-2 text-xs sm:text-sm text-slate-300">${icon}${esc(s)}</span>`;
-      }).join("");
-
-      if (p.photo) {
-        $("hero-photo").src = p.photo;
-        $("hero-photo").alt = "Photo of " + p.name;
-        $("hero-photo-wrapper").classList.remove("hidden");
-      }
-
-      /* ── Render (re-runs on lang change) ── */
-      function render() {
-        document.documentElement.lang = currentLang;
-
-        /* Hero */
-        $("hero-tag").textContent = t("heroTag");
-        $("hero-note").textContent = t("heroNote");
-        $("hero-tagline").textContent = t("tagline");
-        $("hero-btn1").querySelector("span").textContent = t("heroBtn1");
-        $("hero-btn2").querySelector("span").textContent = t("heroBtn2");
-
-        /* Snapshot */
-        $("snapshot-title").textContent = t("snapshotTitle");
-        $("tech-title").textContent     = t("techTitle");
-        $("lang-title").textContent     = t("langTitle");
-        $("languages-container").innerHTML = D.languages.map((l) => {
-          const level = typeof l.level === "object" ? (l.level[currentLang] || l.level.en) : l.level;
-          return `<div class="flex items-center justify-between">
-            <span class="text-white font-medium text-sm">${esc(l.label)}</span>
-            <span class="text-xs text-muted rounded-full border border-white/10 bg-white/5 px-3 py-1">${esc(level)}</span>
-          </div>`;
-        }).join("");
-
-        /* Projects */
-        $("projects-title").textContent = t("projectsTitle");
-        $("projects-sub").textContent   = t("projectsSub");
-        $("projects-container").innerHTML = D.featuredProjects.map((proj) => {
-          const btns = [];
-          if (proj.demoUrl) btns.push(`<a href="${esc(proj.demoUrl)}" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 rounded-lg bg-accent-600 px-4 py-2 text-xs font-semibold text-white transition hover:bg-accent-500" aria-label="Demo ${esc(proj.title)}">Demo</a>`);
-          if (proj.repoUrl) btns.push(`<a href="${esc(proj.repoUrl)}" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold text-white transition hover:bg-white/10" aria-label="Repo ${esc(proj.title)}">Repo</a>`);
-          const img = proj.image
-            ? `<img src="${esc(proj.image)}" alt="${esc(proj.title)}" class="w-full h-56 sm:h-64 object-cover ${proj.imagePosition || "object-center"} rounded-xl mb-4 sm:mb-5" />`
-            : `<div class="w-full h-56 sm:h-64 rounded-xl mb-4 sm:mb-5 flex items-center justify-center dot-grid bg-gradient-to-br from-accent-600/15 via-surface-700 to-base-900 border border-accent-500/15"><span class="tag-mono text-3xl text-accent-400/60">&lt;/&gt;</span></div>`;
-          return `
-          <article class="torn-card card-hover flex flex-col rounded-2xl border border-white/5 bg-surface-800/60 p-5 sm:p-7">
-            ${img}
-            <div class="flex items-start justify-between mb-4">
-              <h3 class="text-lg font-semibold text-white">${esc(proj.title)}</h3>
-              <span class="shrink-0 ml-3 rounded-full border px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${statusColor(proj.status)}">${esc(proj.status)}</span>
-            </div>
-            <p class="text-sm text-slate-400 mb-5 leading-relaxed">${esc(proj.oneLiner)}</p>
-            <div class="space-y-3 mb-6 text-sm">
-              <div><span class="font-medium text-accent-400">${esc(t("problemLabel"))}:</span> <span class="text-slate-400">${esc(proj.problem)}</span></div>
-              <div><span class="font-medium text-accent-400">${esc(t("solutionLabel"))}:</span> <span class="text-slate-400">${esc(proj.solution)}</span></div>
-              <div><span class="font-medium text-accent-400">${esc(t("impactLabel"))}:</span> <span class="text-slate-400">${esc(proj.impact)}</span></div>
-            </div>
-            <div class="mt-auto">
-              <div class="flex flex-wrap gap-1.5 mb-5">${proj.stack.map(badgeHTML).join("")}</div>
-              ${btns.length ? `<div class="flex gap-3">${btns.join("")}</div>` : ""}
-            </div>
-          </article>`;
-        }).join("");
-
-        /* Work */
-        $("work-title").textContent = t("workTitle");
-        $("work-sub").textContent   = t("workSub");
-        $("work-container").innerHTML = D.workHighlights.map((w) => `
-          <article class="torn-card card-hover flex flex-col rounded-2xl border border-white/5 bg-surface-800/60 p-5 sm:p-7">
-            <h3 class="text-base sm:text-lg font-semibold text-white mb-3 sm:mb-4">${esc(w.title)}</h3>
-            <ul class="space-y-2 mb-6 text-sm text-slate-400 list-none">
-              ${w.bullets.map((b) => `<li class="flex items-start gap-2"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent-500"></span><span>${esc(b)}</span></li>`).join("")}
-            </ul>
-            <div class="mt-auto flex flex-wrap gap-1.5">${w.stack.map(badgeHTML).join("")}</div>
-          </article>
-        `).join("");
-
-        /* Education */
-        $("edu-title").textContent       = t("eduTitle");
-        $("edu-label").textContent       = t("eduLabel");
-        $("community-label").textContent = t("communityLabel");
-        $("education-container").innerHTML = D.education.map((e) => `
-          <div class="flex items-start justify-between gap-3">
-            <div>
-              <p class="text-white font-medium text-sm">${esc(e.degree)}</p>
-              <p class="text-xs text-slate-500 mt-0.5">${esc(e.institution)}</p>
-            </div>
-            <span class="shrink-0 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-1 text-[10px] font-semibold text-emerald-400 uppercase tracking-wider">${esc(t("completed"))}</span>
+<main id="inicio">
+  <section class="hero">
+    <div class="wrap">
+      <div class="panel">
+        <div class="photo"><img src="assets/franco.jpg" alt="Franco Durán hablando con micrófono en un evento" width="890" height="1200"></div>
+        <div>
+          <p class="eyebrow" data-t="hero.eyebrow">San Salvador de Jujuy, Argentina</p>
+          <h1>Franco Durán</h1>
+          <p class="role" data-t="hero.role"></p>
+          <div class="tags" id="hero-tags"></div>
+          <div class="cta">
+            <a class="button primary" href="mailto:francoduran232@gmail.com" data-t="hero.write">Escribime</a>
+            <a class="button" href="https://chat.whatsapp.com/Bj1KKgjcLue2FOVuX8osmq" target="_blank" rel="noopener" data-t="hero.community">Comunidad jujuy.dev</a>
+            <div class="social" id="hero-social"></div>
           </div>
-        `).join("");
+        </div>
+      </div>
+    </div>
+  </section>
 
-        /* Community */
-        $("community-container").innerHTML = D.communityRoles.map((r) => {
-          const desc = typeof r.description === "object" ? (r.description[currentLang] || r.description.en) : r.description;
-          return `
-          <div>
-            <p class="text-white font-medium text-sm">${esc(r.role)}</p>
-            <p class="text-xs text-accent-400/70 mt-0.5">${esc(r.organization)}</p>
-            <p class="text-sm text-slate-400 mt-2 leading-relaxed">${esc(desc)}</p>
-          </div>`;
-        }).join("");
+  <section id="hago">
+    <div class="wrap">
+      <p class="eyebrow" data-t="do.eyebrow">// lo que hago</p>
+      <h2 data-t="do.title">IA en producción y comunidad en Jujuy</h2>
+      <div class="roles" id="roles"></div>
+    </div>
+  </section>
 
-        /* Lab */
-        if (D.labProjects && D.labProjects.length) {
-          $("lab-section").classList.remove("hidden");
-          $("lab-title").textContent = t("labTitle");
-          $("lab-sub").textContent   = t("labSub");
-          $("lab-container").innerHTML = D.labProjects.map((l) => {
-            const repoBtn = l.repoUrl ? `<a href="${esc(l.repoUrl)}" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold text-white transition hover:bg-white/10 mt-4" aria-label="Repo ${esc(l.title)}">Repo</a>` : "";
-            return `
-            <article class="torn-card card-hover flex flex-col rounded-2xl border border-white/5 bg-surface-800/60 p-7">
-              <div class="flex items-start justify-between mb-4">
-                <h3 class="text-lg font-semibold text-white">${esc(l.title)}</h3>
-                <span class="shrink-0 ml-3 rounded-full border px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${statusColor(l.status)}">${esc(l.status)}</span>
-              </div>
-              <p class="text-sm text-slate-400 leading-relaxed"><span class="font-medium text-accent-400">${esc(t("learnedLabel"))}:</span> ${esc(l.whatILearned)}</p>
-              <div class="mt-auto">
-                <div class="flex flex-wrap gap-1.5 mt-5">${l.stack.map(badgeHTML).join("")}</div>
-                ${repoBtn}
-              </div>
-            </article>`;
-          }).join("");
-        }
+  <section id="proyectos">
+    <div class="wrap">
+      <p class="eyebrow" data-t="projects.eyebrow">// proyectos</p>
+      <h2 data-t="projects.title">Cosas que están andando</h2>
+      <p class="lead" data-t="projects.lead">Proyectos propios y MVPs que puedo mostrar en público.</p>
+      <div class="projects" id="projects" style="margin-top: var(--s5)"></div>
+    </div>
+  </section>
 
-        /* About */
-        $("about-title").textContent = t("aboutTitle");
-        const aboutParagraphs = t("aboutText").split("\n").filter(Boolean);
-        $("about-text").innerHTML = aboutParagraphs.map((p) => `<p class="mb-4">${esc(p)}</p>`).join("");
+  <section id="ecosistema">
+    <div class="wrap">
+      <p class="eyebrow" data-t="eco.eyebrow">// ecosistema</p>
+      <h2 data-t="eco.title">Embajador y organizador</h2>
+      <p class="lead" data-t="eco.lead">Represento a estas redes en el NOA y organizo hackathons con ellas.</p>
+      <div class="ambassador" id="ambassador" style="margin-top: var(--s5)"></div>
+      <h3 style="font-size:18px; margin-bottom: var(--s3)" data-t="eco.brandsTitle">Los que empujan con nosotros</h3>
+      <p class="lead" style="font-size:15px; margin-bottom: var(--s4)" data-t="eco.brandsLead">Empresas, gobiernos, universidades y comunidades que apoyan a jujuy.dev.</p>
+      <div class="brands" id="brands"></div>
+    </div>
+  </section>
 
-        /* Contact */
-        $("contact-title").textContent = t("contactTitle");
-        $("contact-sub").textContent   = t("contactSub");
-        const contactItems = [
-          { href: "mailto:" + p.email, label: "Email", icon: "M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" },
-          { href: p.linkedin, label: "LinkedIn", icon: "M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM4 6a2 2 0 100-4 2 2 0 000 4z" },
-          { href: p.github, label: "GitHub", icon: "M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.167 6.839 9.49.5.09.682-.218.682-.483 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.607.069-.607 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.091-.647.35-1.087.636-1.337-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844a9.59 9.59 0 012.504.337c1.909-1.294 2.748-1.025 2.748-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z" },
-        ];
-        if (p.showPhone && p.phone) {
-          contactItems.push({ href: "tel:" + p.phone, label: "Phone", icon: "M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" });
-        }
-        $("contact-links").innerHTML = contactItems.map((c) => `
-          <a href="${esc(c.href)}" target="${c.href.startsWith("mailto") || c.href.startsWith("tel") ? "_self" : "_blank"}" rel="noopener"
-             aria-label="${esc(c.label)}"
-             class="inline-flex items-center justify-center gap-2.5 rounded-xl border border-white/10 bg-white/5 px-6 py-3.5 text-sm font-medium text-white transition hover:bg-white/10 hover:border-accent-500/40 w-full sm:w-auto">
-            <svg class="h-4 w-4 text-accent-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="${c.icon}"/></svg>
-            ${esc(c.label)}
-          </a>
-        `).join("");
+  <section id="experiencia">
+    <div class="wrap">
+      <p class="eyebrow" data-t="work.eyebrow">// experiencia</p>
+      <h2 data-t="work.title">Dónde trabajé</h2>
+      <p class="lead" data-t="work.lead">Código no público por confidencialidad; lo explico en una charla.</p>
+      <div class="timeline" id="jobs" style="margin-top: var(--s5)"></div>
+      <div class="two" style="margin-top: var(--s3)">
+        <div class="panel"><h3 data-t="work.edu">Formación</h3><ul id="edu"></ul></div>
+        <div class="panel"><h3 data-t="work.skills">Stack</h3><div class="skills" id="skills"></div></div>
+      </div>
+    </div>
+  </section>
 
-        /* Footer */
-        $("footer-text").textContent = t("footerText");
-      }
+  <section id="contacto" class="contact">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <p class="eyebrow" data-t="contact.eyebrow">// contacto</p>
+          <h2 data-t="contact.title">Hablemos</h2>
+          <p class="lead" data-t="contact.lead">Consultoría de IA, charlas, hackathons o sumarte a la comunidad.</p>
+        </div>
+        <div class="row" id="contact-row"></div>
+      </div>
+    </div>
+  </section>
+</main>
 
-      /* ── Language switcher (desktop + mobile) ── */
-      const allLangBtns = document.querySelectorAll(".lang-btn");
-      allLangBtns.forEach((btn) => {
-        btn.addEventListener("click", () => {
-          currentLang = btn.dataset.lang;
-          allLangBtns.forEach((b) => b.classList.remove("active"));
-          document.querySelectorAll(`.lang-btn[data-lang="${currentLang}"]`).forEach((b) => b.classList.add("active"));
-          render();
-        });
-      });
+<footer>
+  <div class="wrap">
+    <span data-t="footer.made">Hecho por Franco Durán, cofundador de la comunidad <a href="https://jujuy.dev.ar" target="_blank" rel="noopener">jujuy.dev</a>.</span>
+    <span data-t="footer.style">Diseño basado en el sistema visual de <a href="https://colejuy.vercel.app" target="_blank" rel="noopener">Cole Juy</a>.</span>
+  </div>
+</footer>
 
-      /* ── Mobile menu toggle ── */
-      const mobileMenuBtn = $("mobile-menu-btn");
-      const mobileMenu = $("mobile-menu");
-      const iconOpen = $("menu-icon-open");
-      const iconClose = $("menu-icon-close");
-      function toggleMobileMenu(forceClose) {
-        const willOpen = forceClose ? false : !mobileMenu.classList.contains("open");
-        mobileMenu.classList.toggle("open", willOpen);
-        iconOpen.classList.toggle("hidden", willOpen);
-        iconClose.classList.toggle("hidden", !willOpen);
-      }
-      if (mobileMenuBtn) {
-        mobileMenuBtn.addEventListener("click", () => toggleMobileMenu());
-        mobileMenu.querySelectorAll("a").forEach((a) => {
-          a.addEventListener("click", () => toggleMobileMenu(true));
-        });
-      }
-
-      /* ── Initial render ── */
-      render();
-
-      /* ── Scroll animations ── */
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("visible"); observer.unobserve(e.target); } });
-      }, { threshold: 0.12 });
-      document.querySelectorAll(".fade-in").forEach((el) => observer.observe(el));
-
-    })();
-  </script>
+<script src="app.js"></script>
 </body>
 </html>
