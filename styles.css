@@ -207,6 +207,14 @@ h2 { font-size: clamp(26px, 4vw, 36px); font-weight: 700; letter-spacing: -.02em
 
 /* ---------- Contacto ---------- */
 .contact .panel { display: grid; gap: var(--s4); padding: var(--s5); }
+.contact .has-cutout { position: relative; overflow: hidden; }
+.contact .has-cutout > div { position: relative; z-index: 1; }
+.cutout { display: none; }
+@media (min-width: 900px) {
+  .contact .has-cutout { padding-right: 280px; min-height: 300px; }
+  .cutout { display: block; position: absolute; right: var(--s5); bottom: 0; width: 240px; height: auto; transform: translateY(12px); transition: transform 600ms var(--ease-out); }
+  .contact .has-cutout:hover .cutout { transform: translateY(0); }
+}
 .contact .row { display: flex; flex-wrap: wrap; gap: var(--s2); }
 .contact .row .button { flex: 1 1 200px; }
 
