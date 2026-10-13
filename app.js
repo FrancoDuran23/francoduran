@@ -21,7 +21,7 @@
       "nav.do": "Lo que hago", "nav.projects": "Proyectos", "nav.eco": "Ecosistema", "nav.work": "Experiencia", "nav.contact": "Contacto",
       "hero.eyebrow": "San Salvador de Jujuy, Argentina",
       "hero.role": "Automatizo <b>procesos con IA en bancos comerciales</b> y asesoro a empresas como <b>consultor de IA</b>. Fundador de <b>jujuy.dev</b>, creador de <b>Cole Juy</b>, organizador de hackathons y embajador de Monad, Solana y Stellar.",
-      "hero.write": "Escribime", "hero.community": "Comunidad jujuy.dev",
+      "hero.write": "Escribime", "hero.community": "Comunidad jujuy.dev", "hero.cv": "Descargar CV",
       "do.eyebrow": "// lo que hago", "do.title": "IA en producción y comunidad en Jujuy",
       "projects.eyebrow": "// proyectos", "projects.title": "Cosas que están andando", "projects.lead": "Proyectos propios y MVPs que puedo mostrar en público.",
       "eco.eyebrow": "// ecosistema", "eco.title": "Embajador y organizador", "eco.lead": "Represento a estas redes en el NOA y organizo hackathons con ellas.",
@@ -89,7 +89,7 @@
       "nav.do": "What I do", "nav.projects": "Projects", "nav.eco": "Ecosystem", "nav.work": "Experience", "nav.contact": "Contact",
       "hero.eyebrow": "San Salvador de Jujuy, Argentina",
       "hero.role": "I automate <b>processes with AI at commercial banks</b> and advise companies as an <b>AI consultant</b>. Founder of <b>jujuy.dev</b>, creator of <b>Cole Juy</b>, hackathon organizer and ambassador for Monad, Solana and Stellar.",
-      "hero.write": "Email me", "hero.community": "jujuy.dev community",
+      "hero.write": "Email me", "hero.community": "jujuy.dev community", "hero.cv": "Download CV",
       "do.eyebrow": "// what I do", "do.title": "AI in production and community in Jujuy",
       "projects.eyebrow": "// projects", "projects.title": "Things that are live", "projects.lead": "Personal projects and MVPs I can share publicly.",
       "eco.eyebrow": "// ecosystem", "eco.title": "Ambassador and organizer", "eco.lead": "I represent these networks in northern Argentina and run hackathons with them.",
@@ -189,6 +189,7 @@
   function render(lang) {
     const t = T[lang];
     document.documentElement.lang = lang;
+    const cv = $("#cv-link"); if (cv) cv.href = `cv/Franco-Duran-CV-${lang.toUpperCase()}.pdf`;
     document.querySelectorAll("[data-t]").forEach((el) => { const v = t[el.dataset.t]; if (v != null) el.innerHTML = v; });
     document.querySelectorAll("[data-lang]").forEach((b) => b.setAttribute("aria-pressed", b.dataset.lang === lang));
 
