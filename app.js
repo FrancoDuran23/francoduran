@@ -22,6 +22,11 @@
       "hero.eyebrow": "San Salvador de Jujuy, Argentina",
       "hero.role": "Automatizo <b>procesos con IA en bancos comerciales</b> y asesoro a empresas como <b>consultor de IA</b>. Fundador de <b>jujuy.dev</b>, creador de <b>Cole Juy</b>, organizador de hackathons y embajador de Monad, Solana y Stellar.",
       "hero.write": "Escribime", "hero.community": "Comunidad jujuy.dev", "hero.cv": "Descargar CV",
+      "hero.rotPrefix": "Transformo",
+      rot: ["sistemas legacy", "bancos con IA", "procesos en agentes", "comunidad en Jujuy"],
+      stats: [[5, "+", "años llevando software a producción"], [2, "", "sistemas legacy migrados a Django"], [40, "%", "menos tiempo en informes patrimoniales"], [12, "", "marcas aliadas a jujuy.dev"]],
+      "gallery.eyebrow": "// en acción", "gallery.title": "Charlas, hackathons y comunidad",
+      gallery: [["assets/franco-superteam.jpg", "Hackathon con Superteam Argentina", "Mentoreando equipos"], ["assets/franco.jpg", "Acutis Summit · Expo Católica", "1er puesto con Mission Match"], ["assets/projects/missionmatch.webp", "Equipo campeón", "Acutis Summit", "wide"]],
       "do.eyebrow": "// lo que hago", "do.title": "IA en producción y comunidad en Jujuy",
       "projects.eyebrow": "// proyectos", "projects.title": "Cosas que están andando", "projects.lead": "Proyectos propios y MVPs que puedo mostrar en público.",
       "eco.eyebrow": "// ecosistema", "eco.title": "Embajador y organizador", "eco.lead": "Represento a estas redes en el NOA y organizo hackathons con ellas.",
@@ -90,6 +95,11 @@
       "hero.eyebrow": "San Salvador de Jujuy, Argentina",
       "hero.role": "I automate <b>processes with AI at commercial banks</b> and advise companies as an <b>AI consultant</b>. Founder of <b>jujuy.dev</b>, creator of <b>Cole Juy</b>, hackathon organizer and ambassador for Monad, Solana and Stellar.",
       "hero.write": "Email me", "hero.community": "jujuy.dev community", "hero.cv": "Download CV",
+      "hero.rotPrefix": "I transform",
+      rot: ["legacy systems", "banks with AI", "processes into agents", "community in Jujuy"],
+      stats: [[5, "+", "years shipping software to production"], [2, "", "legacy systems migrated to Django"], [40, "%", "less time on disclosure reports"], [12, "", "partner brands backing jujuy.dev"]],
+      "gallery.eyebrow": "// in action", "gallery.title": "Talks, hackathons and community",
+      gallery: [["assets/franco-superteam.jpg", "Hackathon with Superteam Argentina", "Mentoring teams"], ["assets/franco.jpg", "Acutis Summit · Expo Católica", "1st place with Mission Match"], ["assets/projects/missionmatch.webp", "Champion team", "Acutis Summit", "wide"]],
       "do.eyebrow": "// what I do", "do.title": "AI in production and community in Jujuy",
       "projects.eyebrow": "// projects", "projects.title": "Things that are live", "projects.lead": "Personal projects and MVPs I can share publicly.",
       "eco.eyebrow": "// ecosystem", "eco.title": "Ambassador and organizer", "eco.lead": "I represent these networks in northern Argentina and run hackathons with them.",
@@ -197,14 +207,14 @@
     $("#hero-social").innerHTML = [["github", LINKS.github, "GitHub"], ["linkedin", LINKS.linkedin, "LinkedIn"], ["x", LINKS.x, "X"], ["instagram", LINKS.instagram, "Instagram"]]
       .map(([i, u, l]) => `<a class="icon-button" href="${u}" ${ext} aria-label="${l}">${svg(i)}</a>`).join("");
 
-    $("#roles").innerHTML = t.roles.map((r) => `
-      <article class="role-card reveal">
+    $("#roles").innerHTML = t.roles.map((r, i) => `
+      <article class="role-card reveal" style="--d:${i % 2}">
         <span class="chapa" style="--c:${r.c}">${r.n}</span>
         <div><h3>${esc(r.h)}</h3><p>${esc(r.p)}</p>${miniBits(r.mini)}</div>
       </article>`).join("");
 
-    $("#projects").innerHTML = t.projects.map((p) => `
-      <article class="project reveal">
+    $("#projects").innerHTML = t.projects.map((p, i) => `
+      <article class="project reveal" style="--d:${i % 3}">
         <div class="shot ${p.logo ? "logo-shot" : ""}"><img src="${p.logo || p.img}" alt="${esc(p.t)}" loading="lazy"></div>
         <div class="head"><h3>${esc(p.t)}</h3><span class="status ${p.s}">${esc(p.st)}</span></div>
         <p>${esc(p.p)}</p>
@@ -215,8 +225,14 @@
     $("#ambassador").innerHTML = t.ambassador.map((a) => `
       <div class="brand reveal">${a.svg ? svg(a.svg) : `<span class="word">${esc(a.word)}</span>`}<span><b>${esc(a.h)}</b><small>${esc(a.s)}</small></span></div>`).join("");
 
-    $("#brands").innerHTML = BRANDS.map(([n, src, u, kind]) => `
-      <a class="brand reveal" href="${u}" ${ext} aria-label="${esc(n)}"><img src="${src}" alt="${esc(n)}" class="${kind}" loading="lazy">${kind === "round" ? `<span>${esc(n)}</span>` : ""}</a>`).join("");
+    const brandHTML = (list, hidden) => list.map(([n, src, u, kind]) => `
+      <a class="brand" href="${u}" ${ext} aria-label="${esc(n)}" ${hidden ? 'aria-hidden="true" tabindex="-1"' : ""}><img src="${src}" alt="${hidden ? "" : esc(n)}" class="${kind}" loading="lazy">${kind === "round" ? `<span>${esc(n)}</span>` : ""}</a>`).join("");
+    const half = Math.ceil(BRANDS.length / 2), rowA = BRANDS.slice(0, half), rowB = BRANDS.slice(half);
+    $("#brands").innerHTML = `<div class="track">${brandHTML(rowA)}${brandHTML(rowA, true)}</div><div class="track rev">${brandHTML(rowB)}${brandHTML(rowB, true)}</div>`;
+
+    $("#stats").innerHTML = t.stats.map(([n, suf, l], i) => `<div class="stat reveal" style="--d:${i}"><b data-count="${n}" data-suf="${suf}">0${suf}</b><span>${esc(l)}</span></div>`).join("");
+    $("#gallery").innerHTML = t.gallery.map(([src, h, s, w], i) => `<figure class="shot-card reveal ${w || ""}" style="--d:${i}"><img src="${src}" alt="${esc(h)}" loading="lazy"><figcaption>${esc(h)}<small>${esc(s)}</small></figcaption></figure>`).join("");
+    startRotator(t.rot);
 
     $("#jobs").innerHTML = t.jobs.map((j) => `
       <article class="job reveal">
@@ -236,9 +252,44 @@
   let io;
   function observe() {
     io?.disconnect();
-    io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -40px" });
+    io = new IntersectionObserver((es) => es.forEach((e) => {
+      if (!e.isIntersecting) return;
+      e.target.classList.add("in"); io.unobserve(e.target);
+      const n = e.target.querySelector("[data-count]"); if (n) countUp(n);
+    }), { rootMargin: "0px 0px -40px" });
     document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
   }
+
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function countUp(el) {
+    const to = +el.dataset.count, suf = el.dataset.suf || "";
+    if (reduce) { el.textContent = to + suf; return; }
+    const t0 = performance.now(), D = 1300;
+    const step = (t) => { const p = Math.min(1, (t - t0) / D); el.textContent = Math.round(to * (1 - Math.pow(1 - p, 3))) + suf; if (p < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  }
+
+  let rotTimer;
+  const ROT_COLORS = ["var(--c1)", "var(--c2)", "var(--c3)", "var(--c4)"];
+  function startRotator(words) {
+    clearInterval(rotTimer);
+    const box = $("#rot"); let i = 0;
+    const show = () => {
+      const old = box.querySelector("b:not(.out)");
+      if (old) { old.classList.add("out"); setTimeout(() => old.remove(), 400); }
+      const b = document.createElement("b"); b.textContent = words[i]; b.style.setProperty("--c", ROT_COLORS[i % ROT_COLORS.length]);
+      box.appendChild(b); i = (i + 1) % words.length;
+    };
+    box.innerHTML = ""; show();
+    if (!reduce) rotTimer = setInterval(show, 2600);
+  }
+
+  (() => {
+    const imgs = [...document.querySelectorAll("#hero-photos img")], dots = [...document.querySelectorAll("#hero-photos .photo-dots i")];
+    if (imgs.length < 2 || reduce) return;
+    let k = 0;
+    setInterval(() => { k = (k + 1) % imgs.length; imgs.forEach((im, n) => im.classList.toggle("on", n === k)); dots.forEach((d, n) => d.classList.toggle("on", n === k)); }, 5200);
+  })();
 
   document.querySelectorAll("[data-lang]").forEach((b) => (b.onclick = () => render(b.dataset.lang)));
   let lang = "es";

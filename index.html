@@ -13,7 +13,7 @@
 <meta name="theme-color" content="#171714" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%231c1b18'/><path d='M9 23V9h12v3.2h-8.4v2.6h7v3.1h-7V23z' fill='%23f3f0e8'/><circle cx='24' cy='24' r='3' fill='%23ef7d4f'/></svg>">
 <link rel="preload" href="fonts/barlow-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css?v=2">
 </head>
 <body>
 
@@ -41,10 +41,15 @@
   <section class="hero">
     <div class="wrap">
       <div class="panel">
-        <div class="photo"><img src="assets/franco.jpg" alt="Franco Durán hablando con micrófono en un evento" width="890" height="1200"></div>
+        <div class="photo" id="hero-photos">
+          <img class="on" src="assets/franco.jpg" alt="Franco Durán hablando con micrófono en un evento" width="890" height="1200">
+          <img src="assets/franco-superteam.jpg" alt="Franco Durán con la remera de Superteam Argentina en un hackathon" width="900" height="1200" loading="lazy">
+          <div class="photo-dots" aria-hidden="true"><i class="on"></i><i></i></div>
+        </div>
         <div>
           <p class="eyebrow" data-t="hero.eyebrow">San Salvador de Jujuy, Argentina</p>
-          <h1>Franco Durán</h1>
+          <h1 class="split" aria-label="Franco Durán"><span>Franco</span> <span>Durán</span></h1>
+          <p class="rotator" aria-live="polite"><span data-t="hero.rotPrefix">Transformo</span> <span class="rot" id="rot"><b>sistemas legacy</b></span></p>
           <p class="role" data-t="hero.role"></p>
           <div class="tags" id="hero-tags"></div>
           <div class="cta">
@@ -55,6 +60,7 @@
           </div>
         </div>
       </div>
+      <div class="stats" id="stats"></div>
     </div>
   </section>
 
@@ -75,6 +81,14 @@
     </div>
   </section>
 
+  <section id="accion" class="gallery-sec">
+    <div class="wrap">
+      <p class="eyebrow" data-t="gallery.eyebrow">// en acción</p>
+      <h2 data-t="gallery.title">Charlas, hackathons y comunidad</h2>
+    </div>
+    <div class="gallery" id="gallery"></div>
+  </section>
+
   <section id="ecosistema">
     <div class="wrap">
       <p class="eyebrow" data-t="eco.eyebrow">// ecosistema</p>
@@ -83,7 +97,7 @@
       <div class="ambassador" id="ambassador" style="margin-top: var(--s5)"></div>
       <h3 style="font-size:18px; margin-bottom: var(--s3)" data-t="eco.brandsTitle">Los que empujan con nosotros</h3>
       <p class="lead" style="font-size:15px; margin-bottom: var(--s4)" data-t="eco.brandsLead">Empresas, gobiernos, universidades y comunidades que apoyan a jujuy.dev.</p>
-      <div class="brands" id="brands"></div>
+      <div class="marquee" id="brands"></div>
     </div>
   </section>
 
@@ -121,6 +135,6 @@
   </div>
 </footer>
 
-<script src="app.js"></script>
+<script src="app.js?v=2"></script>
 </body>
 </html>
